@@ -110,7 +110,8 @@ The single LINPACK source file is used to build two executables, `linpacksp` for
 
 Running LINPACK with `make run` will run both the single-precision and 
 double-precision versions of the benchmark, an example session follows:
-`$ make run n=1000 occ=hp-c
+```
+$ make run n=1000 occ=hp-c
         cc -Aa -fast  -lm -DSP ./src/linpack.c -o ./bin/linpacksp
         cc -Aa -fast  -lm -DDP ./src/linpack.c -o ./bin/linpackdp
 SINGLE PRECISION************************************
@@ -144,6 +145,4 @@ Average rolled and unrolled performance:
       16  19.20  94.27%   0.83%   4.90%  146914.932
 
 ****************************************************
-`
-
-
+```
