@@ -27,6 +27,10 @@ Each benchmark in this package resides in its own directory and can be
 quickly built by issuing the `make` command in that directory. By default, 
 these benchmarks are built without any optimizations for testing purposes.
 
+Benchmarks can then be run by issuing `make run`, though they may need
+parameters passed to them in order to run properly. These parameters are
+described in each benchmark's section.
+
 ### Optimizing benchmarks
 
 All makefiles in this package by default attempt to build a benchmark with 
@@ -57,3 +61,89 @@ for the HP C compiler on HP UX with `hp-c.mk`  would use this command:
 While a fully optimized GCC build with `gcc-opt.mk` may use:
 
 `make occ=gcc-opt`
+
+## Packaged benchmarks
+
+### Classic Benchmarks
+
+#### LINPACK
+
+First introduced in 1979, the LINPACK benchmark measures a system's 
+floating-point math capabilities by solving a dense system of linear 
+equations. LINPACK remains an industry standard particularly in
+supercomputing, where it is used to build the TOP500 list of the world's
+fastest computers. LINPACK measures system performance in terms of Floating
+Point Operations per Second, or FLOPS. Most small systems today typically 
+operate on the order of megaFLOPS, gigaFLOPS and teraFLOPS, while
+supercomputers often operate in the petaFLOPS range.
+
+LINPACK evaluates performance with both single-precision (32-bit) and
+double-precision (64-bit) floating-point numbers, usually selectable
+at compile time. Single-precision values are most frequently used in 
+"everyday" desktop computing applications where precision and 
+utmost accuracy are not as necessary, while double-precision values
+are more frequently used in scientific and technical applications where
+minimal approximation is preferable. Many LINPACK variants default to
+double-precision (including the one in this package) because of the
+benchmark's significance in high-performance computing.
+
+This version of LINPACK is a C translation of the original FORTRAN version
+first written in 1988 by Bonnie Toy and later updated in 1993 by Will 
+Menninger, it most notably allows for user-definable matrix sizes and
+averages rolled and unrolled performance in its report. The original
+source can be found [here](http://www.netlib.org/benchmark/linpackc.new).
+
+This source has been slightly modified in this package to make it easier
+to automate and execute from scripts. It can now take the matrix size as
+an argument and the output has changed slightly for a cleaner look.
+
+##### Running LINPACK
+
+LINPACK requires a single parameter `n` to be passed to it when running 
+with `make run`, this corresponds to the matrix size. Typical matrices 
+used with LINPACK are of order 100x100 or 1000x1000, though any value of 
+`n` can be passed in, within reason. LINPACK can also be run without the
+makefile by simply running the executable, which will then ask for `n` if
+it wasn't supplied as the first argument.
+
+The single LINPACK source file is used to build two executables, `linpacksp` for evaluating single-precision performance and `linpackdp` for evaluating double-precision performance. Both are identical in functionality.
+
+Running LINPACK with `make run` will run both the single-precision and 
+double-precision versions of the benchmark, an example session follows:
+`$ make run n=1000 occ=hp-c
+        cc -Aa -fast  -lm -DSP ./src/linpack.c -o ./bin/linpacksp
+        cc -Aa -fast  -lm -DDP ./src/linpack.c -o ./bin/linpackdp
+SINGLE PRECISION************************************
+LINPACK benchmark, Single precision.
+Machine precision:  6 digits.
+Array size 1000 X 1000.
+Memory required:  3914K.
+Average rolled and unrolled performance:
+
+    Reps Time(s) DGEFA   DGESL  OVERHEAD    KFLOPS
+----------------------------------------------------
+       2   0.96  86.46%   2.08%  11.46%  394509.750
+       4   1.91  87.43%   0.52%  12.04%  399206.438
+       8   3.81  88.19%   0.79%  11.02%  395673.656
+      16   7.65  88.76%   0.52%  10.72%  392776.938
+      32  15.28  88.09%   0.72%  11.19%  395381.938
+
+DOUBLE PRECISION************************************
+LINPACK benchmark, Double precision.
+Machine precision:  15 digits.
+Array size 1000 X 1000.
+Memory required:  7824K.
+Average rolled and unrolled performance:
+
+    Reps Time(s) DGEFA   DGESL  OVERHEAD    KFLOPS
+----------------------------------------------------
+       1   1.21  93.39%   0.83%   5.79%  147076.023
+       2   2.40  94.17%   0.83%   5.00%  147076.023
+       4   4.81  93.97%   1.25%   4.78%  146433.770
+       8   9.61  94.28%   0.73%   4.99%  146914.932
+      16  19.20  94.27%   0.83%   4.90%  146914.932
+
+****************************************************
+`
+
+
