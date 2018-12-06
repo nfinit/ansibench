@@ -102,7 +102,7 @@ an argument and the output has changed slightly for a cleaner look.
 
 ##### Running LINPACK
 
-LINPACK requires a single parameter `n` to be passed to it when running 
+LINPACK has a single parameter `n` which can be passed to it when running 
 with `make run`, this corresponds to the matrix size. Typical matrices 
 used with LINPACK are of order 100x100 or 1000x1000, though any value of 
 `n` can be passed in, within reason. LINPACK can also be run without the
