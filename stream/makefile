@@ -12,6 +12,7 @@ CFLAGS = -ansi
 # Configures standard libraries and compiler flags to ensure portability
 # It's recommended to override these with a separate file as well.
 ###########################################################################
+OPENMP = -fopenmp
 DFLAG  = -D
 OFLAG  = -o
 ###########################################################################
@@ -52,7 +53,7 @@ dirs:
 # EXECUTABLE BUILD/RUN OPTIONS // DO NOT MODIFY BEYOND THIS POINT *********
 ###########################################################################
 bin: dirs $(INPUT) 
-	$(CC) $(CFLAGS) $(XFLAGS) $(DFLAG)$(DARRS)=$(n) $(INPUT) $(OFLAG) $(OUT)
+	$(CC) $(CFLAGS) $(XFLAGS) $(OPENMP) $(DFLAG)$(DARRS)=$(n) $(INPUT) $(OFLAG) $(OUT)
 ###########################################################################
 # FILESYSTEM CLEANUP OPERATIONS // DO NOT MODIFY BEYOND THIS POINT ********
 ###########################################################################

@@ -65,7 +65,7 @@ While a fully optimized GCC build with `gcc-opt.mk` may use:
 ## Packaged benchmarks
 
 ### Classic Benchmarks
-______________________
+---------------------------------------------------------------------------
 #### LINPACK
 
 First introduced in 1979, the LINPACK benchmark measures a system's 
@@ -147,4 +147,51 @@ Average rolled and unrolled performance:
 ****************************************************
 ```
 ##### [LINPACK results](https://github.com/nfinit/ansibench/wiki/LINPACK-results)
-______________________
+---------------------------------------------------------------------------
+#### STREAM
+
+STREAM is a synthetic memory benchmark first developed in 1991 by 
+Dr. John McCalpin at the University of Delaware's College of Marine Studies.
+It is described by McCalpin as "an extremely simplified representation of the
+low-compute-intensity, long-vector operations characteristic of ocean
+circulation models" and has since become an industry standard for measuring
+memory performance on various computer systems.
+
+STREAM measures memory performance using four separately timed kernels 
+corresponding to copy, scale, add and "triad" operations, with the latter 
+kernel (a combination of the three others) usually cited for in-general 
+comparison. STREAM results are often used alongside LINPACK when evaluating
+supercomputer performance, as memory bandwidth is often even more important
+than raw processor speed when working with the large data sets typical in
+supercomputing workloads.
+
+This is the "official" C version of STREAM which can be found on the
+[STREAM website](http://www.cs.virginia.edu/stream/). It has been very
+minimally modified for inclusion in this package mostly to make acceptable
+to an ANSI C compiler and easier to automate using a makefile. Only comments
+and some macro definitions have been modified (to allow the array size to be
+overridden easier in a non-GNU makefile without conditional statements) along
+with the deprecated Time Zone structure removed in the `mysecond()` function.
+Because of the minimal nature of these modifications, this version of STREAM
+should still be compliant with the official 
+[run rules](http://www.cs.virginia.edu/stream/ref.html#runrules).
+
+##### Running STREAM 
+
+STREAM can be built and run immediately by issuing the command `make run` along
+with any overrides specified by the `occ` and `ov` parameters.
+
+STREAM by default operates on an array of 10,000,000 elements, which may be
+too small or too large for some systems. In a similar manner to LINPACK, the
+array size can be configured from the makefile using the parameter `n`. Unlike
+LINPACK, this parameter is defined at compile-time, and STREAM will need to be
+recompiled to use a different array size.
+
+It is recommended to specify an array size at least 4 times the size of your
+system's processor caches in order to ensure that the system memory is
+actually what is being benchmarked. The default `n`=10,000,000 parameter
+should be acceptable for caches up to 4 MiB, but many modern systems are now
+shipping with 8 MiB of cache and beyond, meaning `n` will need to be larger
+for a result that properly reflects memory performance.
+
+##### [STREAM results](https://github.com/nfinit/ansibench/wiki/STREAM-results)
