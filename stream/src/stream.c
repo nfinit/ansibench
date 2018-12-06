@@ -41,6 +41,7 @@
 /*  5. Absolutely no warranty is expressed or implied.                        */
 /*----------------------------------------------------------------------------*/
 # include <stdio.h>
+# include <stdlib.h>
 # include <unistd.h>
 # include <math.h>
 # include <float.h>
@@ -228,11 +229,11 @@ main()
     printf("*****  WARNING: ******\n");
     printf("      It appears that you set the preprocessor variable N when compiling this code.\n");
     printf("      This version of the code uses the preprocesor variable STREAM_ARRAY_SIZE to control the array size\n");
-    printf("      Reverting to default value of STREAM_ARRAY_SIZE=%llu\n",(unsigned long long) STREAM_ARRAY_SIZE);
+    printf("      Reverting to default value of STREAM_ARRAY_SIZE=%.0f\n",(double) STREAM_ARRAY_SIZE);
     printf("*****  WARNING: ******\n");
 #endif
 
-    printf("Array size = %llu (elements), Offset = %d (elements)\n" , (unsigned long long) STREAM_ARRAY_SIZE, OFFSET);
+    printf("Array size = %.0f (elements), Offset = %d (elements)\n" , (double) STREAM_ARRAY_SIZE, OFFSET);
     printf("Memory per array = %.1f MiB (= %.1f GiB).\n", 
 	BytesPerWord * ( (double) STREAM_ARRAY_SIZE / 1024.0/1024.0),
 	BytesPerWord * ( (double) STREAM_ARRAY_SIZE / 1024.0/1024.0/1024.0));

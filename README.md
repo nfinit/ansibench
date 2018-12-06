@@ -1,6 +1,7 @@
 # ANSI C Benchmarks for Unix and Unix-like systems
 
-_Jump to: [LINPACK](http://github.com/nfinit/ansibench#linpack), [STREAM](http://github.com/nfinit/ansibench#stream)_
+_Jump to: [LINPACK](http://github.com/nfinit/ansibench#linpack), 
+          [STREAM](http://github.com/nfinit/ansibench#stream)_
 
 This repository packages a selection of ANSI C program sources useful for 
 benchmarking a wide variety of systems and compilers, including a number 
@@ -108,7 +109,9 @@ used with LINPACK are of order 100x100 or 1000x1000, though any value of
 makefile by simply running the executable, which will then ask for `n` if
 it wasn't supplied as the first argument.
 
-The single LINPACK source file is used to build two executables, `linpacksp` for evaluating single-precision performance and `linpackdp` for evaluating double-precision performance. Both are identical in functionality.
+The single LINPACK source file is used to build two executables, `linpacksp` 
+for evaluating single-precision performance and `linpackdp` for evaluating 
+double-precision performance. Both are identical in functionality.
 
 Running LINPACK with `make run` will run both the single-precision and 
 double-precision versions of the benchmark, an example session follows:
@@ -148,7 +151,7 @@ Average rolled and unrolled performance:
 
 ****************************************************
 ```
-##### [LINPACK results](https://github.com/nfinit/ansibench/wiki/LINPACK-results)
+##### [LINPACK results](https://github.com/nfinit/ansibench/wiki/LINPACK-results) 
 ---------------------------------------------------------------------------
 #### STREAM
 
@@ -170,10 +173,11 @@ supercomputing workloads.
 This is the "official" C version of STREAM which can be found on the
 [STREAM website](http://www.cs.virginia.edu/stream/). The source has been very
 minimally modified for inclusion in this package mostly to make it acceptable
-to an ANSI C compiler and easier to automate using a makefile. Only comments
-and some macro definitions have been modified (to allow the array size to be
-overridden easier in a non-GNU makefile without conditional statements) along
-with the deprecated Time Zone structure removed in the `mysecond()` function.
+to an ANSI C compiler and easier to automate using a makefile. Only comments,
+print statement formatting and some macro definitions have been modified
+(to allow the default array size to still be properly set in the event of an 
+empty STREAM array size definition argument from a non-GNU makefile) with the
+deprecated Time Zone structure removed in the `mysecond()` function.
 Because of the minimal nature of these modifications, this version of STREAM
 should still be compliant with the official 
 [run rules](http://www.cs.virginia.edu/stream/ref.html#runrules).
