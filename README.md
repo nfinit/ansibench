@@ -166,8 +166,8 @@ than raw processor speed when working with the large data sets typical in
 supercomputing workloads.
 
 This is the "official" C version of STREAM which can be found on the
-[STREAM website](http://www.cs.virginia.edu/stream/). It has been very
-minimally modified for inclusion in this package mostly to make acceptable
+[STREAM website](http://www.cs.virginia.edu/stream/). The source has been very
+minimally modified for inclusion in this package mostly to make it acceptable
 to an ANSI C compiler and easier to automate using a makefile. Only comments
 and some macro definitions have been modified (to allow the array size to be
 overridden easier in a non-GNU makefile without conditional statements) along
@@ -195,3 +195,4 @@ shipping with 8 MiB of cache and beyond, meaning `n` will need to be larger
 for a result that properly reflects memory performance.
 
 ##### [STREAM results](https://github.com/nfinit/ansibench/wiki/STREAM-results)
+---------------------------------------------------------------------------
