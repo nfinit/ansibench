@@ -202,8 +202,10 @@ extern void tuned_STREAM_Scale(STREAM_TYPE scalar);
 extern void tuned_STREAM_Add();
 extern void tuned_STREAM_Triad(STREAM_TYPE scalar);
 #endif
+#ifndef DIS_OPENMP
 #ifdef _OPENMP
 extern int omp_get_num_threads();
+#endif
 #endif
 int
 main()
@@ -244,6 +246,7 @@ main()
     printf(" The *best* time for each kernel (excluding the first iteration)\n"); 
     printf(" will be used to compute the reported bandwidth.\n");
 
+#ifndef DIS_OPENMP
 #ifdef _OPENMP
     printf(HLINE);
 #pragma omp parallel 
@@ -255,7 +258,9 @@ main()
         }
     }
 #endif
+#endif
 
+#ifndef DIS_OPENMP
 #ifdef _OPENMP
 	k = 0;
 #pragma omp parallel
@@ -263,9 +268,12 @@ main()
 		k++;
     printf ("Number of Threads counted = %i\n",k);
 #endif
+#endif
 
     /* Get initial value for system clock. */
+#ifndef DIS_OPENMP
 #pragma omp parallel for
+#endif
     for (j=0; j<STREAM_ARRAY_SIZE; j++) {
 	    a[j] = 1.0;
 	    b[j] = 2.0;
@@ -284,7 +292,9 @@ main()
     }
 
     t = mysecond();
+#ifndef DIS_OPENMP
 #pragma omp parallel for
+#endif
     for (j = 0; j < STREAM_ARRAY_SIZE; j++)
 		a[j] = 2.0E0 * a[j];
     t = 1.0E6 * (mysecond() - t);
@@ -311,7 +321,9 @@ main()
 #ifdef TUNED
         tuned_STREAM_Copy();
 #else
+#ifndef DIS_OPENMP
 #pragma omp parallel for
+#endif
 	for (j=0; j<STREAM_ARRAY_SIZE; j++)
 	    c[j] = a[j];
 #endif
@@ -321,7 +333,9 @@ main()
 #ifdef TUNED
         tuned_STREAM_Scale(scalar);
 #else
+#ifndef DIS_OPENMP
 #pragma omp parallel for
+#endif
 	for (j=0; j<STREAM_ARRAY_SIZE; j++)
 	    b[j] = scalar*c[j];
 #endif
@@ -331,7 +345,9 @@ main()
 #ifdef TUNED
         tuned_STREAM_Add();
 #else
+#ifndef DIS_OPENMP
 #pragma omp parallel for
+#endif
 	for (j=0; j<STREAM_ARRAY_SIZE; j++)
 	    c[j] = a[j]+b[j];
 #endif
@@ -341,7 +357,9 @@ main()
 #ifdef TUNED
         tuned_STREAM_Triad(scalar);
 #else
+#ifndef DIS_OPENMP
 #pragma omp parallel for
+#endif
 	for (j=0; j<STREAM_ARRAY_SIZE; j++)
 	    a[j] = b[j]+scalar*c[j];
 #endif
@@ -557,7 +575,9 @@ void checkSTREAMresults ()
 void tuned_STREAM_Copy()
 {
 	ssize_t j;
+#ifndef DIS_OPENMP
 #pragma omp parallel for
+#endif
         for (j=0; j<STREAM_ARRAY_SIZE; j++)
             c[j] = a[j];
 }
@@ -565,7 +585,9 @@ void tuned_STREAM_Copy()
 void tuned_STREAM_Scale(STREAM_TYPE scalar)
 {
 	ssize_t j;
+#ifndef DIS_OPENMP
 #pragma omp parallel for
+#endif
 	for (j=0; j<STREAM_ARRAY_SIZE; j++)
 	    b[j] = scalar*c[j];
 }
@@ -573,7 +595,9 @@ void tuned_STREAM_Scale(STREAM_TYPE scalar)
 void tuned_STREAM_Add()
 {
 	ssize_t j;
+#ifndef DIS_OPENMP
 #pragma omp parallel for
+#endif
 	for (j=0; j<STREAM_ARRAY_SIZE; j++)
 	    c[j] = a[j]+b[j];
 }
@@ -581,7 +605,9 @@ void tuned_STREAM_Add()
 void tuned_STREAM_Triad(STREAM_TYPE scalar)
 {
 	ssize_t j;
+#ifndef DIS_OPENMP
 #pragma omp parallel for
+#endif
 	for (j=0; j<STREAM_ARRAY_SIZE; j++)
 	    a[j] = b[j]+scalar*c[j];
 }
