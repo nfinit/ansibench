@@ -159,7 +159,7 @@ STREAM is a synthetic memory benchmark first developed in 1991 by
 Dr. John McCalpin at the University of Delaware's College of Marine Studies.
 It is described by McCalpin as "an extremely simplified representation of the
 low-compute-intensity, long-vector operations characteristic of ocean
-circulation models" and has since become an industry standard for measuring
+circulation models" and has since become a standard for measuring
 memory performance on various computer systems.
 
 STREAM measures memory performance using four separately timed kernels 
@@ -202,3 +202,52 @@ for a result that properly reflects memory performance.
 
 ##### [STREAM results](https://github.com/nfinit/ansibench/wiki/STREAM-results)
 ---------------------------------------------------------------------------
+#### Whetstone
+
+The Whetstone benchmark is a synthetic benchmark that primarily measures 
+a computer's floating-point performance. Originally written in ALGOL 60 in 1972 
+by Harold Curnow of the Technical Support Unit of the United Kingdom's 
+Department of Trade and Industry, it was one of the first general-prupose
+benchmarks to set industry standards for evaluating computing performance.
+
+The Whetstone benchmark is based on prior work by Brian Wichmann of the UK's
+National Physical Laboratory (NPL) who collected statistics from a modified
+version of the "Whetstone" ALGOL compiler running on an English Electric KDF9
+computer at the NPL and used the data to build a set of 42 simple statements
+that could be used to evaluate the efficiency of other compilers and processor
+performance. 
+
+Whetstone speed ratings are measured in Whetstone Instructions Per Second 
+(WIPS), and most early versions of the benchmark output ratings in KWIPS, 
+while most newer versions (including this one) produce ratings in MWIPS. 
+Although Whetstone performs a general mix of calculations, most of them 
+are still overwhelmingly floating-point heavy, and because only a small 
+amount of data is referenced, architectural factors such as the performance 
+of the memory subsystem are barely if at all evaluated, especially if the 
+processor being evaluated has large enough caches.
+
+The Whetstone version included in this package is the "updated" C translation
+found on the [Netlib repository](http://www.netlib.org/benchmark/whetstone.c)
+with minimal modification, mostly just to printed output. This version was
+translated directly from the original ALGOL 60 version of the benchmark, and
+has output similar to the [FORTRAN version](http://www.netlib.org/benchmark/whetstoned).
+
+##### Running Whetstone
+
+Whetstone can be built and run immediately by issuing the command 
+`make run` along with any overrides specified by the `occ` and `ov` 
+parameters.
+
+By default, the Whetstone benchmark loops 1,000,000 times. This can be 
+increased or decreased to better evaluate a given system by setting the 
+`loops` parameter when running the benchmark through the makefile, or 
+by specifying the number of loops when running the executable directly. 
+The executable also has an optional `-c` flag for continuous looping 
+operation, which is not used by the makefile.
+
+It's always recommended to build Whetstone with `PRINTOUT` defined for proper
+output, this ensures that optimizing compilers do not over-optimize the
+benchmark by omitting computations whose end result are never shown to the
+user.
+
+##### [Whetstone results](https://github.com/nfinit/ansibench/wiki/Whetstone-results)
