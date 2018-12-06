@@ -15,7 +15,7 @@ CFLAGS = -ansi
 DFLAG  = -D
 OFLAG  = -o
 LFLAG  = -l
-LFLAGS = $(LFLAG)l
+LFLAGS = $(LFLAG)m
 DEFS   = $(DFLAG)PRINTOUT
 ###########################################################################
 # PATH CONFIGURATION ******************************************************
