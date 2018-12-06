@@ -65,7 +65,7 @@ While a fully optimized GCC build with `gcc-opt.mk` may use:
 ## Packaged benchmarks
 
 ### Classic Benchmarks
-
+______________________
 #### LINPACK
 
 First introduced in 1979, the LINPACK benchmark measures a system's 
@@ -146,3 +146,5 @@ Average rolled and unrolled performance:
 
 ****************************************************
 ```
+##### [LINPACK results](https://github.com/nfinit/ansibench/wiki/LINPACK-results)
+______________________
