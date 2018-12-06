@@ -35,6 +35,14 @@ Benchmarks can then be run by issuing `make run`, though they may need
 parameters passed to them in order to run properly. These parameters are
 described in each benchmark's section.
 
+Some benchmarks also may require special accomodations to build on certain
+operating systems and compiler configurations, these overrides can be
+specified by setting the `ov` parameter to the name of a valid override
+file in the `overrides/[program]` directory without extension. For example,
+building the STREAM benchmark under HP-UX requires appending `ov=hpux` or
+`ov=hpux-mp` to the `make` command, these correspond to `hpux.mk` and
+`hpux-mp.mk` in the `overrides/stream` directory, respectively.
+
 ### Optimizing benchmarks
 
 All makefiles in this package by default attempt to build a benchmark with 
@@ -62,9 +70,9 @@ for the HP C compiler on HP UX with `hp-c.mk`  would use this command:
 
 `make occ=hp-c`
 
-While a fully optimized GCC build with `gcc-opt.mk` may use:
+While a fully optimized GCC build with `gcc-ofast.mk` may use:
 
-`make occ=gcc-opt`
+`make occ=gcc-ofast`
 
 ## Packaged benchmarks
 
