@@ -1,5 +1,5 @@
 ############################################################################
-# Compiler overrides for HP-UX with HP aCC *********************************
+# Compiler overrides for the GNU C Compiler ********************************
 ############################################################################
-CC = aCC
-CFLAGS = -Ae -Aa +Oall
+CC = gcc -ansi
+CFLAGS = -O3 -ffast-math
