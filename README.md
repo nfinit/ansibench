@@ -1,6 +1,6 @@
 # ANSI C Benchmarks for Unix and Unix-like systems
 
-Jump to: [LINPACK](http://github.com/nfinit/ansibench#linpack), [STREAM](http://github.com/nfinit/ansibench#stream)
+_Jump to: [LINPACK](http://github.com/nfinit/ansibench#linpack), [STREAM](http://github.com/nfinit/ansibench#stream)_
 
 This repository packages a selection of ANSI C program sources useful for 
 benchmarking a wide variety of systems and compilers, including a number 
