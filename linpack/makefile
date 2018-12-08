@@ -64,9 +64,9 @@ dp: dirs $(INPUT)
 # FILESYSTEM CLEANUP OPERATIONS // DO NOT MODIFY BEYOND THIS POINT ********
 ###########################################################################
 clean:
-	@rm -f $(SPOUT) $(DPOUT) core a.out *.o
-	@rm -f $(BDIR)/*
-	@rmdir $(BDIR)
+	@-rm -f $(SPOUT) $(DPOUT) core a.out *.o
+	@-rm -f $(BDIR)/*
+	@-rmdir $(BDIR)
 ###########################################################################
 # END OF MAKEFILE *********************************************************
 ###########################################################################
