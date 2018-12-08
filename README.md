@@ -123,43 +123,8 @@ for evaluating single-precision performance and `linpackdp` for evaluating
 double-precision performance. Both are identical in functionality.
 
 Running LINPACK with `make run` will run both the single-precision and 
-double-precision versions of the benchmark, an example session follows:
-```
-$ make run n=1000 occ=hp-c
-        cc -Aa -fast  -lm -DSP ./src/linpack.c -o ./bin/linpacksp
-        cc -Aa -fast  -lm -DDP ./src/linpack.c -o ./bin/linpackdp
-SINGLE PRECISION************************************
-LINPACK benchmark, Single precision.
-Machine precision:  6 digits.
-Array size 1000 X 1000.
-Memory required:  3914K.
-Average rolled and unrolled performance:
+double-precision versions of the benchmark.
 
-    Reps Time(s) DGEFA   DGESL  OVERHEAD    KFLOPS
-----------------------------------------------------
-       2   0.96  86.46%   2.08%  11.46%  394509.750
-       4   1.91  87.43%   0.52%  12.04%  399206.438
-       8   3.81  88.19%   0.79%  11.02%  395673.656
-      16   7.65  88.76%   0.52%  10.72%  392776.938
-      32  15.28  88.09%   0.72%  11.19%  395381.938
-
-DOUBLE PRECISION************************************
-LINPACK benchmark, Double precision.
-Machine precision:  15 digits.
-Array size 1000 X 1000.
-Memory required:  7824K.
-Average rolled and unrolled performance:
-
-    Reps Time(s) DGEFA   DGESL  OVERHEAD    KFLOPS
-----------------------------------------------------
-       1   1.21  93.39%   0.83%   5.79%  147076.023
-       2   2.40  94.17%   0.83%   5.00%  147076.023
-       4   4.81  93.97%   1.25%   4.78%  146433.770
-       8   9.61  94.28%   0.73%   4.99%  146914.932
-      16  19.20  94.27%   0.83%   4.90%  146914.932
-
-****************************************************
-```
 ##### [LINPACK results](https://github.com/nfinit/ansibench/wiki/LINPACK-results) 
 ---------------------------------------------------------------------------
 #### STREAM
