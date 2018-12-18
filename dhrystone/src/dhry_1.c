@@ -73,7 +73,7 @@ float           Microseconds,
 Enumeration Func_1 (Capital_Letter Ch_1_Par_Val, Capital_Letter Ch_2_Par_Val);
 void Proc_1 (REG Rec_Pointer Ptr_Val_Par);
 
-int main ()
+int main (int argc, char **argv)
 /*****/
 
   /* main program, corresponds to procedures        */
@@ -110,25 +110,27 @@ int main ()
 
   printf ("\n");
   printf ("Dhrystone Benchmark, Version 2.1 (Language: C)\n");
-  printf ("\n");
   if (Reg)
   {
     printf ("Program compiled with 'register' attribute\n");
-    printf ("\n");
   }
   else
   {
     printf ("Program compiled without 'register' attribute\n");
-    printf ("\n");
   }
-  printf ("Please give the number of runs through the benchmark: ");
-  {
-    int n;
-    scanf ("%d", &n);
-    Number_Of_Runs = n;
-  }
+  printf ("HZ = %d\n", HZ);
   printf ("\n");
-
+  if (argc < 2) {
+  	printf ("Please give the number of runs through the benchmark: ");
+  	{
+    	int n;
+   	scanf ("%d", &n);
+    	Number_Of_Runs = n;
+  	}
+  	printf ("\n");
+  } else {
+	Number_Of_Runs = atoi(argv[1]);
+  }
   printf ("Execution starts, %d runs through Dhrystone\n", Number_Of_Runs);
 
   /***************/
