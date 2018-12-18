@@ -233,7 +233,7 @@ user.
 A pun on the name of the floating-point focused "Whetstone" benchmark, the
 Dhrystone benchmark is, like Whetstone, a synthetic benchmark derived from
 statistical analysis with the goal of representing an "average" program.
-Dhrystone is unlike Whetstone in that it focuses more on integer arithmetic,
+Dhrystone is unlike Whetstone in that it focuses entirely on integer arithmetic,
 making it more relevant to small systems and typical computing use cases 
 in general than the more scientific and technically-oriented Whetstone.
 
