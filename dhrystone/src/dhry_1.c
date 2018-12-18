@@ -279,9 +279,11 @@ int main (int argc, char **argv)
                         / (float) User_Time;
 #endif
     printf ("Microseconds for one run through Dhrystone: ");
-    printf ("%6.1f \n", Microseconds);
+    printf ("%12.1f \n", Microseconds);
     printf ("Dhrystones per Second:                      ");
-    printf ("%6.1f \n", Dhrystones_Per_Second);
+    printf ("%12.1f \n", Dhrystones_Per_Second);
+    printf ("VAX MIPS:                                   ");
+    printf ("%12.1f \n", Dhrystones_Per_Second/1757);
     printf ("\n");
   }
   return 0;
