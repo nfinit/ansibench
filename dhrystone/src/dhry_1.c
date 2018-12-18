@@ -61,10 +61,16 @@ extern clock_t	clock();
 #define Too_Small_Time (2*HZ)
 #endif
 
+#ifndef FLOAT
+	Boolean Float_Rating = false;
+#else
+	Boolean Float_Rating = true;
+#endif
+
 long            Begin_Time,
                 End_Time,
                 User_Time;
-float           Microseconds,
+measure         Microseconds,
                 Dhrystones_Per_Second;
 
 /* end of variables for time measurement */
@@ -117,6 +123,14 @@ int main (int argc, char **argv)
   else
   {
     printf ("Program compiled without 'register' attribute\n");
+  }
+  if (Float_Rating)
+  {
+    printf ("Ratings using 'float' datatype (%d bytes)\n",sizeof(float));
+  }
+  else
+  {
+    printf ("Ratings using 'double' datatype (%d bytes)\n",sizeof(double));
   }
   printf ("HZ = %d\n", HZ);
   printf ("\n");
@@ -269,14 +283,14 @@ int main (int argc, char **argv)
   else
   {
 #ifdef TIME
-    Microseconds = (float) User_Time * Mic_secs_Per_Second 
-                        / (float) Number_Of_Runs;
-    Dhrystones_Per_Second = (float) Number_Of_Runs / (float) User_Time;
+    Microseconds = (measure) User_Time * Mic_secs_Per_Second 
+                        / (measure) Number_Of_Runs;
+    Dhrystones_Per_Second = (measure) Number_Of_Runs / (measure) User_Time;
 #else
-    Microseconds = (float) User_Time * Mic_secs_Per_Second 
-                        / ((float) HZ * ((float) Number_Of_Runs));
-    Dhrystones_Per_Second = ((float) HZ * (float) Number_Of_Runs)
-                        / (float) User_Time;
+    Microseconds = (measure) User_Time * Mic_secs_Per_Second 
+                        / ((measure) HZ * ((measure) Number_Of_Runs));
+    Dhrystones_Per_Second = ((measure) HZ * (measure) Number_Of_Runs)
+                        / (measure) User_Time;
 #endif
     printf ("Microseconds for one run through Dhrystone: ");
     printf ("%12.1f \n", Microseconds);

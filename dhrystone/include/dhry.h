@@ -389,6 +389,13 @@
 #endif
         /* for boolean and enumeration types in Ada, Pascal */
 
+/* Switchable double/float type as an experiment to improve result accuracy */
+#ifndef FLOAT 
+typedef double measure;
+#else
+typedef float measure;
+#endif
+
 /* General definitions: */
 #include <stdlib.h>
                 /* for exit */
