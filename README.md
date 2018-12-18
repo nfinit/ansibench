@@ -187,10 +187,10 @@ benchmarks to set industry standards for evaluating computing performance.
 
 The Whetstone benchmark is based on prior work by Brian Wichmann of the UK's
 National Physical Laboratory (NPL) who collected statistics from a modified
-version of the "Whetstone" ALGOL compiler running on an English Electric KDF9
-computer at the NPL and used the data to build a set of 42 simple statements
-that could be used to evaluate the efficiency of other compilers and processor
-performance. 
+version of the "Whetstone" ALGOL compiler running on an [English Electric KDF9
+computer](https://en.wikipedia.org/wiki/English_Electric_KDF9) at the NPL 
+and used the data to build a set of 42 simple statements that could be used 
+to evaluate the efficiency of other compilers and processor performance. 
 
 Whetstone speed ratings are measured in Whetstone Instructions Per Second 
 (WIPS), and most early versions of the benchmark output ratings in KWIPS, 
@@ -282,7 +282,13 @@ The Dhrystone version included in this package is the
 [most widely used version (2.1)](http://www.netlib.org/benchmark/dhry-c) 
 with some modifications mostly to make it acceptable to ANSI-compliant C compilers 
 as well as automation improvements such as the ability to take in the number of 
-iterations as an argument at execution time.
+iterations as an argument at execution time. It has also been modified to compute
+and report the VAX MIPS rating from the benchmark result and display it after the
+Dhrystones per second rating.
+
+Because the C Dhrystone translation is still mostly written in K&R-style C, it might
+still not be acceptable to some stricter compilers and may need to be revised further
+in the future.
 
 ##### Running Dhrystone
 
