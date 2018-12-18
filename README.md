@@ -241,8 +241,8 @@ Weicker of Siemens Nixdorf Information Systems in 1984, based on analysis of a
 number of programs in numerous languages. Weicker characterized these programs
 based on common constructs such as procedure calls and variable assignments, and
 used this data to write a benchmark corresponding to a "representative mix" of
-these features, similar to the design of the Whetstone benchmark nearly a decade
-earlier.
+these features, similar to the design process of the Whetstone benchmark over 
+a decade earlier.
 
 Dhrystone was first ported to C by Rick Richardson of PC Research, Inc. and 
 distributed via Usenet. Richardson and Weicker later collaborated on subsequent
@@ -254,7 +254,7 @@ Dhrystone speed ratings are measured in Dhrystones Per Second, corresponding to
 the number of times the main Dhrystone loop iterates in a single second. This
 quantity is often further refined into "VAX MIPS," corresponding to a multiple
 of the [DEC VAX-11/780 superminicomputer](http://en.wikipedia.org/wiki/VAX-11)'s
-reported score of 1757 Dhrystones per second.
+reported score of 1,757 Dhrystones per second.
 
 While Dhrystone attempts to emulate the "typical" program, it is nonetheless
 unsuitable for use as a sole means of benchmarking a system for a number of
