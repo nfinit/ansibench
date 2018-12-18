@@ -1,6 +1,7 @@
 # ANSI C Benchmarks for Unix and Unix-like systems
 
-_Jump to: [LINPACK](http://github.com/nfinit/ansibench#linpack), 
+_Jump to classic benchmarks: 
+          [LINPACK](http://github.com/nfinit/ansibench#linpack), 
           [STREAM](http://github.com/nfinit/ansibench#stream),
           [Whetstone](http://github.com/nfinit/ansibench#whetstone),
           [Dhrystone](http://github.com/nfinit/ansibench#dhrystone)_
