@@ -1,6 +1,6 @@
 # ANSI C Benchmarks for Unix and Unix-like systems
 
-_Jump to classic benchmarks: 
+_Jump to [classic benchmarks](http://github.com/nfinit/ansibench#classic-benchmarks): 
           [LINPACK](http://github.com/nfinit/ansibench#linpack), 
           [STREAM](http://github.com/nfinit/ansibench#stream),
           [Whetstone](http://github.com/nfinit/ansibench#whetstone),
@@ -309,8 +309,8 @@ by specifying the number of loops when running the executable directly.
 Dhrystone requires the parameter `HZ` to be defined at compile time, which
 corresponds to the granularity of the timing function. This is typically 100
 on most newer systems and is the default value, however it can still vary and
-should be confirmed before running the benchmark. If your system can execute
-POSIX shell scripts, the script `gethz.sh` will compile and run a simple program
+should be confirmed before running the benchmark. If you're working in a POSIX
+environment, the script `gethz.sh` will compile and run a simple program
 that determines the value of the `_SC_CLK_TCK` parameter which corresponds to the
 number of clock "ticks" per second as configured in the kernel. This information
 can also be retrieved by issuing `getconf _SC_CLK_TCK` (or `getconf CLK_TCK` if
