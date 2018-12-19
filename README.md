@@ -79,6 +79,9 @@ While a fully optimized GCC build with `gcc-ofast.mk` may use:
 ## Packaged benchmarks
 
 ### Classic Benchmarks
+
+Mature, venerable industry-standard benchmarks designed for use on a wide variety of systems and architectures
+
 ---------------------------------------------------------------------------
 #### LINPACK
 
