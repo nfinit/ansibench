@@ -86,13 +86,13 @@ int main(int argc, char **argv)
         {
 	if (argc < 2)
        	    {
-	    printf("Enter array size (q to quit) [200]:  ");
+	    printf("Enter array size (q to quit) [100]:  ");
             fgets(buf,79,stdin);
             }
 	if (buf[0]=='q' || buf[0]=='Q')
             break;
         if (buf[0]=='\0' || buf[0]=='\n')
-	    arsize=200;
+	    arsize=100;
 	else
             arsize=atoi(buf);
         if (argc > 1)
