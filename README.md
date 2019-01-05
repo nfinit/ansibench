@@ -1,3 +1,5 @@
+[![](http://assets.amuniversal.com/a10595106d5401301d7c001dd8b71c47)](https://dilbert.com/strip/2004-12-25)
+
 # ANSI C Benchmarks for Unix and Unix-like systems
 
 _Jump to [classic benchmarks](http://github.com/nfinit/ansibench#classic-benchmarks): 
