@@ -75,7 +75,7 @@ typedef signed int ee_s32;
 typedef double ee_f32;
 typedef unsigned char ee_u8;
 typedef unsigned int ee_u32;
-typedef size_t ee_ptr_int;
+typedef size_t ee_ptr_int; /* size_t is typically equal to pointer size on *most* targets */
 typedef size_t ee_size_t;
 /* align_mem :
 	This macro is used to align an offset to point to a 32b value. It is used in the Matrix algorithm to initialize the input memory blocks.
