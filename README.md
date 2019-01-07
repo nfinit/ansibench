@@ -287,6 +287,10 @@ with other benchmarks when evaluating a system as a whole. Dhrystone nonetheless
 still widely used in the industry, especially in embedded systems where VAX MIPS is
 still often cited in marketing literature.
 
+A modern alternative to Dhrystone that attempts to provide solutions to many of its
+shortcomings is the EEMBC's [CoreMark](http://github.com/nfinit/ansibench#coremark)
+benchmark, which is also included in this package.
+
 The Dhrystone version included in this package is the 
 [most widely used version (2.1)](http://www.netlib.org/benchmark/dhry-c) 
 with some modifications mostly to make it acceptable to ANSI-compliant C compilers 
