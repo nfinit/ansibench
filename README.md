@@ -389,7 +389,6 @@ distribution likely invalid for any kind of official use:
 * Different directory structure and makefile from the official repository
 * Single set of `core_portme.c` and `core_portme.h` based on the `simple` template
 * Slight modifications to `core_main.c`:
-* -More helpful output when the `ee_ptr_int` data type is incorrectly configured
 * -Removal of compiler, flag and memory location strings in final output due to lack 
 of a widely portable way to determine these automatically
 * -Insertion of a warning in the benchmark output reminding users to refer to the 
