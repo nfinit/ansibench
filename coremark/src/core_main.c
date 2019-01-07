@@ -261,9 +261,6 @@ MAIN_RETURN_TYPE main(int argc, char *argv[]) {
 			total_errors=-1;
 			break;
 	}
-	ee_printf("\nWARNING: Modified version. DO NOT USE FOR OFFICIAL SCORING!\n");
-	ee_printf("Please see the official repository at https://github.com/eembc/coremark\n");
-	ee_printf("if you plan on submitting your CoreMark score to the EEMBC.\n\n");
 	if (known_id>=0) {
 		for (i=0 ; i<default_num_contexts; i++) {
 			results[i].err=0;
@@ -337,6 +334,9 @@ MAIN_RETURN_TYPE main(int argc, char *argv[]) {
 		ee_printf("Errors detected\n");
 	if (total_errors<0)
 		ee_printf("Cannot validate operation for these seed values, please compare with results on a known platform.\n");
+	ee_printf("\nWARNING: Modified version. DO NOT USE FOR OFFICIAL SCORING!\n");
+	ee_printf("Please see the official repository at https://github.com/eembc/coremark\n");
+	ee_printf("if you plan on submitting your CoreMark score to the EEMBC.\n");
 
 #if (MEM_METHOD==MEM_MALLOC)
 	for (i=0 ; i<MULTITHREAD; i++) 
