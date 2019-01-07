@@ -7,6 +7,9 @@ _Jump to [classic benchmarks](http://github.com/nfinit/ansibench#classic-benchma
           [STREAM](http://github.com/nfinit/ansibench#stream),
           [Whetstone](http://github.com/nfinit/ansibench#whetstone),
           [Dhrystone](http://github.com/nfinit/ansibench#dhrystone)_
+          
+_Jump to [modern benchmarks](http://github.com/nfinit/ansibench#modern-benchmarks):
+          [CoreMark](http://github.com/nfinit/ansibench#coremark)_
 
 This repository packages a selection of ANSI C program sources useful for 
 benchmarking a wide variety of systems and compilers, including a number 
@@ -333,3 +336,75 @@ variables, meaning that Dhrystone will assign some variables to dedicated proces
 registers when possible for faster access than from cache or memory.
 
 ##### [Dhrystone results](http://github.com/nfinit/ansibench/wiki/Dhrystone-results)
+
+### Modern Benchmarks
+
+Modern industry-standard (and upcoming) benchmarks that attempt to solve
+the various problems of or otherwise improve on their "classic" predecessors
+
+---------------------------------------------------------------------------
+#### CoreMark
+
+The [CoreMark](https://www.eembc.org/coremark/) benchmark is a product of 
+the [Embedded Microprocessor Benchmark Consortium](https://www.eembc.org/),
+and aims to provide a modern alternative to the venerable integer-focused
+[Dhrystone](http://github.com/nfinit/ansibench#dhrystone) benchmark while
+answering many of its shortcomings and improving its relevance primarily in
+the area of low-power embedded systems, where Dhrystone is still predominantly
+used by vendors to provide rough performance estimates and means of comparison
+with competing products.
+
+CoreMark was primarily developed by Shay Gal-On, then the director of software
+engineering at the EEMBC, as the EEMBC's first freely available standard 
+benchmark. CoreMark answers a number of problems with the original synthetic
+Dhrystone benchmark with an entirely new design built around a number of
+commonly used algorithms in microcontrollers and microprocessors alike,
+including list procesing, matrix manipulation, state machines and cyclic
+redundancy checks, as opposed to Dhrystone's purely synthetic, statistically
+derived loop that intends to simulate the "average" program. In addition to
+a more real-world focus, CoreMark also does not call any external libraries
+in timed sections of the benchmark, so as to most effectively report on the
+performance of the processor itself rather than the quality of the target 
+system's standard libraries. Lastly, CoreMark is also designed more defensively
+against compiler optimizations than Dhrystone, to keep any actual computation
+from being "optimized away" at compile time, an oft-cited (and exploited)
+problem with Dhrystone.
+
+Like Dhrystone, CoreMark reports its scores in terms of the number of benchmark
+iterations per second.
+
+**CoreMark is distributed by the EEMBC under the Apache 2.0 license and is freely
+available to any interested party through the EEMBC's 
+[official GitHub repository](https://github.com/eembc/coremark). If you are
+interested in submitting your CoreMark score to the EEMBC for use in their official
+score lists, please use this repository instead!**
+
+While the CoreMark sources in this package are from this official repository, there
+are some directory and source modifications for end-user convenience that make this 
+distribution likely invalid for any kind of official use:
+* Different directory structure and makefile from the official repository
+* Single set of `core_portme.c` and `core_portme.h` based on the `simple` template
+* Slight modifications to `core_main.c`:
+* -More helpful output when the `ee_ptr_int` data type is incorrectly configured
+* -Removal of compiler, flag and memory location strings in final output due to lack 
+of a widely portable way to determine these automatically
+* -Insertion of a warning in the benchmark output reminding users to refer to the 
+official repository if they intend to submit their CoreMark results to the EEMBC
+
+**No timed or otherwise non-output related portions of the benchmark have been 
+modified for inclusion in this package.**
+
+##### Running CoreMark
+
+CoreMark can be built and run immediately by issuing the command `make run` along 
+with a compiler override specified by the `occ` parameter. By default, the makefile
+is configured to build and run CoreMark with the seeds 0x0, 0x0 and 0x66 and 20,000
+iterations, the latter of which can be tweaked with the `n` parameter. CoreMark
+is required to run for at least 10 seconds in order to obtain a valid result.
+
+Currently, the makefile only builds a single-threaded executable, but CoreMark can
+be built with multiprocessor/multicore-awareness, and the makefile will eventually
+be updated to accomodate for this.
+
+##### [ANSIbench CoreMark results](http://github.com/nfinit/ansibench/wiki/CoreMark-results)
+##### [Official EEMBC CoreMark results](https://www.eembc.org/coremark/scores.php) 
