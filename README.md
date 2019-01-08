@@ -377,25 +377,15 @@ problem with Dhrystone.
 Like Dhrystone, CoreMark reports its scores in terms of the number of benchmark
 iterations per second.
 
-**CoreMark is distributed by the EEMBC under the Apache 2.0 license and is freely
+CoreMark is freely distributed by the EEMBC under the Apache 2.0 license and is
 available to any interested party through the EEMBC's 
-[official GitHub repository](https://github.com/eembc/coremark). If you are
-interested in submitting your CoreMark score to the EEMBC for use in their official
-score lists, please use this repository instead!**
-
-While the CoreMark sources in this package are from this official repository, there
-are some directory and source modifications for end-user convenience that make this 
-distribution likely invalid for any kind of official use:
-* Different directory structure and makefile from the official repository
-* Single set of `core_portme.c` and `core_portme.h` based on the `simple` template
-* Slight modifications to `core_main.c`:
-* -Removal of compiler, flag and memory location strings in final output due to lack 
-of a widely portable way to determine these automatically
-* -Insertion of a warning in the benchmark output reminding users to refer to the 
-official repository if they intend to submit their CoreMark results to the EEMBC
-
-**No timed or otherwise non-output related portions of the benchmark have been 
-modified for inclusion in this package.**
+[official GitHub repository](https://github.com/eembc/coremark). Although the
+source files included in this package are identical to those in the official
+repository (other than the modified `core_portme` files) it's still recommended
+to use the official repository for any official validation and score submission 
+purposes due mostly to differences in building, directory structure, 
+documentation and reporting arising from this package's exclusive focus on convenient
+personal and non-marketing uses.
 
 ##### Running CoreMark
 
