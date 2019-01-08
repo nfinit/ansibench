@@ -9,7 +9,8 @@ _Jump to [classic benchmarks](http://github.com/nfinit/ansibench#classic-benchma
           [Dhrystone](http://github.com/nfinit/ansibench#dhrystone)_
           
 _Jump to [modern benchmarks](http://github.com/nfinit/ansibench#modern-benchmarks):
-          [CoreMark](http://github.com/nfinit/ansibench#coremark)_
+          [CoreMark](http://github.com/nfinit/ansibench#coremark),
+          [HINT](http://github.com/nfinit/ansibench#hint)_
 
 This repository packages a selection of ANSI C program sources useful for 
 benchmarking a wide variety of systems and compilers, including a number 
@@ -340,7 +341,7 @@ variables, meaning that Dhrystone will assign some variables to dedicated proces
 registers when possible for faster access than from cache or memory.
 
 ##### [Dhrystone results](http://github.com/nfinit/ansibench/wiki/Dhrystone-results)
-
+---------------------------------------------------------------------------
 ### Modern Benchmarks
 
 Modern industry-standard (and upcoming) benchmarks that attempt to solve
@@ -401,3 +402,76 @@ be updated to accomodate for this.
 
 ##### [ANSIbench CoreMark results](http://github.com/nfinit/ansibench/wiki/CoreMark-results)
 ##### [Official EEMBC CoreMark results](https://www.eembc.org/coremark/scores.php) 
+---------------------------------------------------------------------------
+#### HINT
+
+Although released in 1994, the Hierarchical INTegration (HINT) benchmark is considered a 
+"modern" benchmark due to its novel and innovative design, which evaluates a computer 
+system's performance in terms of the *quality* of a solution, rather than simply
+the overall amount of time it took to compute it, and in fact is built around a problem that
+has no concrete solution to begin with, reflecting many "real-world" problems especially in
+supercomputing where models are continuously refined, rather than solved outright.
+
+HINT was designed by Dr. John Gustafson and Quinn Snell of the US DoE's Ames Laboratory, 
+taking some ideas from the earlier SLALOM benchmark but with an entirely new fundamental
+concept based on the measurement of Quality Improvements Per Second (QUIPS) on a problem
+not of fixed size nor fixed time. HINT derives this metric from the following task,
+described in [this publication](http://www.johngustafson.net/images/Hint.pdf) on Gustafson's
+website:
+
+>Use interval subdivision to find rational bounds on the area in the xy plane for which x ranges from 0 to 1 and y ranges from 0 to (1- x) / (1+ x). Subdivide x and y ranges into an integer power of two equal subintervals and count the squares thus defined that are completely inside the area (lower bound) or completely contain the area (upper bound). Use the knowledge that the function (1- x) / (1+ x) is monotone decreasing, so the upper bound comes from the left function value and the lower bound from the right function value on any subinterval. No other knowledge about the function may be used. The objective is to obtain the highest quality answer in the least time, for as large a range of times as possible.
+
+In the simplest terms, HINT successively refines the upper and lower bounds (quality) of the
+function `(1-x)/(1+x)` with each subinterval, eventually arriving at a solution similar to 
+this example with 8-bit data types shown below:
+
+[![](http://www.johngustafson.net/pubs/pub47/Figure4.gif)](http://www.johngustafson.net/pubs/pub47/Hint.htm)
+
+The quality of this solution can further be refined theoretically infinitely, only
+limited by the hardware of the system it is running on and the precision of the
+selected data types.
+
+While HINT outputs a "Net QUIPS" score at the end of every run, actual HINT results are
+dumped to a file as a table of QUIPS observed over time and are meant to be plotted to
+better evaluate the performance of not only the processor but the memory subsystems as
+well. Gustafson and Snell provide an example plot of HINT results from an SGI Indy
+workstation with a variety of data types in HINT's introductory publication:
+
+[![](http://www.johngustafson.net/pubs/pub47/Figure5.gif)](http://www.johngustafson.net/pubs/pub47/Hint.htm)
+
+While net QUIPS can still be considered a valid performance estimate, plotting HINT
+data provides much more insight into more significant system components, as well as
+the system's ability to sustain a given rate of QUIPS over an extended period of time.
+
+The version of HINT included in this package is the "serial" variant for single-processor
+Unix systems, which isn't properly optimized for parallel execution. A parallel version of
+HINT does exist, and may be included in this package at a later time. Some modifications were
+introduced primarily for packaging and ANSI compliance, mainly the removal of the `long long`
+data type and fixed data file names to allow for proper execution from the makefile.
+
+John Gustafson maintains a [small page dedicated to HINT](http://www.johngustafson.net/hint.html)
+on his website, including links to some interesting publications, results and source code.
+
+#### Running HINT
+
+HINT can be built and run immediately by issuing the command `make run` along 
+with a compiler override specified by the `occ` parameter. By default, the makefile
+builds a `double` executable when run or builds all executables when run with `make`
+alone.
+
+The data type used by HINT can be changed at compile time with the make target or
+`dtype` parameter (when using `make run`) set to one of the following values:
+`short`
+`int`
+`long`
+`float`
+`double` (default)
+`ldouble` (long double)
+
+HINT may system-specific overrides to compile, currently only HP-UX is
+accounted for with `ov=hpux`.
+
+The HINT benchmark can take a considerably long time to run depending on the
+data type selected, be patient with it!
+
+##### [HINT results](http://github.com/nfinit/ansibench/wiki/HINT-results)
