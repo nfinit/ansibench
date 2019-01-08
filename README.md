@@ -475,3 +475,4 @@ The HINT benchmark can take a considerably long time to run depending on the
 data type selected, be patient with it!
 
 ##### [HINT results](http://github.com/nfinit/ansibench/wiki/HINT-results)
+---------------------------------------------------------------------------
