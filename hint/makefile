@@ -22,7 +22,7 @@ LFLAG  = -l
 ###########################################################################
 OVERRIDE   = ../override
 OVERRIDECC = $(OVERRIDE)/cc
-OVERRIDECM = $(OVERRIDE)/hint
+OVERRIDEHT = $(OVERRIDE)/hint
 SDIR       = ./src
 BDIR       = ./bin
 DDIR       = ./data
@@ -38,7 +38,7 @@ OUT =   $(BDIR)/hint
 # OVERRIDE INCLUDES // DO NOT MODIFY BEYOND THIS POINT ********************
 ###########################################################################
 -include $(OVERRIDECC)/$(occ).mk
--include $(OVERRIDECM)/$(ov).mk
+-include $(OVERRIDEHT)/$(ov).mk
 ###########################################################################
 # BUILD/RUN OPERATIONS // DO NOT MODIFY BEYOND THIS POINT *****************
 ###########################################################################
