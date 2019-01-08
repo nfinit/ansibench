@@ -301,9 +301,12 @@ MAIN_RETURN_TYPE main(int argc, char *argv[]) {
 	}
 
 	ee_printf("Iterations       : %lu\n", (long unsigned) default_num_contexts*results[0].iterations);
+	ee_printf("Compiler version : %s\n",COMPILER_VERSION);
+	ee_printf("Compiler flags   : %s\n",COMPILER_FLAGS);
 #if (MULTITHREAD>1)
 	ee_printf("Parallel %s : %d\n",PARALLEL_METHOD,default_num_contexts);
 #endif
+	ee_printf("Memory location  : %s\n",MEM_LOCATION);
 	/* output for verification */
 	ee_printf("seedcrc          : 0x%04x\n",seedcrc);
 	if (results[0].execs & ID_LIST)
@@ -318,10 +321,15 @@ MAIN_RETURN_TYPE main(int argc, char *argv[]) {
 	for (i=0 ; i<default_num_contexts; i++) 
 		ee_printf("[%d]crcfinal      : 0x%04x\n",i,results[i].crc);
 	if (total_errors==0) {
-		ee_printf("Correct operation validated.\n");
+		ee_printf("Correct operation validated. See README.md for run and reporting rules.\n");
 #if HAS_FLOAT
 		if (known_id==3) {
-			ee_printf("\nCoreMark 1.0 : %f ",default_num_contexts*results[0].iterations/time_in_secs(total_time));
+			ee_printf("CoreMark 1.0 : %f / %s %s",default_num_contexts*results[0].iterations/time_in_secs(total_time),COMPILER_VERSION,COMPILER_FLAGS);
+#if defined(MEM_LOCATION) && !defined(MEM_LOCATION_UNSPEC)
+			ee_printf(" / %s",MEM_LOCATION);
+#else
+			ee_printf(" / %s",mem_name[MEM_METHOD]);
+#endif
 
 #if (MULTITHREAD>1)
 			ee_printf(" / %d:%s",default_num_contexts,PARALLEL_METHOD);
@@ -334,9 +342,6 @@ MAIN_RETURN_TYPE main(int argc, char *argv[]) {
 		ee_printf("Errors detected\n");
 	if (total_errors<0)
 		ee_printf("Cannot validate operation for these seed values, please compare with results on a known platform.\n");
-	ee_printf("\nWARNING: Modified version. DO NOT USE FOR OFFICIAL SCORING!\n");
-	ee_printf("Please see the official repository at https://github.com/eembc/coremark\n");
-	ee_printf("if you plan on submitting your CoreMark score to the EEMBC.\n");
 
 #if (MEM_METHOD==MEM_MALLOC)
 	for (i=0 ; i<MULTITHREAD; i++) 

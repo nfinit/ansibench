@@ -63,6 +63,23 @@ Original Author: Shay Gal-on
 #include <time.h>
 typedef clock_t CORE_TICKS;
 
+/* Definitions : COMPILER_VERSION, COMPILER_FLAGS, MEM_LOCATION
+ * 	Initialize these strings per platform
+ * 	*/
+#ifndef COMPILER_VERSION 
+ #ifdef __GNUC__
+ #define COMPILER_VERSION "GCC "__VERSION__
+ #else
+ #define COMPILER_VERSION "UNKNOWN COMPILER"
+ #endif
+#endif
+#ifndef COMPILER_FLAGS 
+ #define COMPILER_FLAGS "FLAGS N/A" /* "Please put compiler flags here (e.g. -o3)" */
+#endif
+#ifndef MEM_LOCATION 
+ #define MEM_LOCATION "STACK"
+#endif
+
 /* Data Types :
 	To avoid compiler issues, define the data types that need ot be used for 8b, 16b and 32b in <core_portme.h>.
 	

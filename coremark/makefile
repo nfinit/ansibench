@@ -58,7 +58,7 @@ dirs:
 # EXECUTABLE BUILD/RUN OPTIONS // DO NOT MODIFY BEYOND THIS POINT *********
 ###########################################################################
 bin: dirs $(INPUT) 
-	$(CC) $(CFLAGS) $(XFLAGS) $(IFLAG)$(IDIR) $(DFLAG)PERFORMANCE_RUN=1 $(DFLAG)ITERATIONS=$(n) $(INPUT) $(OFLAG) $(OUT)
+	$(CC) $(CFLAGS) $(XFLAGS) $(IFLAG)$(IDIR) $(DFLAG)COMPILER_FLAGS=\"$(CFLAGS)\" $(DFLAG)PERFORMANCE_RUN=1 $(DFLAG)ITERATIONS=$(n) $(INPUT) $(OFLAG) $(OUT)
 ###########################################################################
 # FILESYSTEM CLEANUP OPERATIONS // DO NOT MODIFY BEYOND THIS POINT ********
 ###########################################################################
