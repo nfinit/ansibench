@@ -57,17 +57,17 @@ dirs:
 # EXECUTABLE BUILD/RUN OPTIONS // DO NOT MODIFY BEYOND THIS POINT *********
 ###########################################################################
 char: dirs $(INPUT) 
-	$(CC) $(CFLAGS) $(XFLAGS) $(LFLAG)m $(IFLAG)$(IDIR) $(DFLAG)unix $(DFLAG)CHAR $(DFLAG)IINT $(INPUT) $(OFLAG) $(OUT)-char
+	$(CC) $(CFLAGS) $(XFLAGS) $(LFLAG)m $(IFLAG)$(IDIR) $(DFLAG)RUNTM=$(runtime) $(DFLAG)unix $(DFLAG)CHAR $(DFLAG)IINT $(INPUT) $(OFLAG) $(OUT)-char
 short: dirs $(INPUT) 
-	$(CC) $(CFLAGS) $(XFLAGS) $(LFLAG)m $(IFLAG)$(IDIR) $(DFLAG)unix $(DFLAG)SHORT $(DFLAG)IINT $(INPUT) $(OFLAG) $(OUT)-short
+	$(CC) $(CFLAGS) $(XFLAGS) $(LFLAG)m $(IFLAG)$(IDIR) $(DFLAG)RUNTM=$(runtime) $(DFLAG)unix $(DFLAG)SHORT $(DFLAG)IINT $(INPUT) $(OFLAG) $(OUT)-short
 int: dirs $(INPUT) 
-	$(CC) $(CFLAGS) $(XFLAGS) $(LFLAG)m $(IFLAG)$(IDIR) $(DFLAG)unix $(DFLAG)INT $(DFLAG)IINT $(INPUT) $(OFLAG) $(OUT)-int
+	$(CC) $(CFLAGS) $(XFLAGS) $(LFLAG)m $(IFLAG)$(IDIR) $(DFLAG)RUNTM=$(runtime) $(DFLAG)unix $(DFLAG)INT $(DFLAG)IINT $(INPUT) $(OFLAG) $(OUT)-int
 float: dirs $(INPUT) 
-	$(CC) $(CFLAGS) $(XFLAGS) $(LFLAG)m $(IFLAG)$(IDIR) $(DFLAG)unix $(DFLAG)FLOAT $(DFLAG)IINT $(INPUT) $(OFLAG) $(OUT)-float
+	$(CC) $(CFLAGS) $(XFLAGS) $(LFLAG)m $(IFLAG)$(IDIR) $(DFLAG)RUNTM=$(runtime) $(DFLAG)unix $(DFLAG)FLOAT $(DFLAG)IINT $(INPUT) $(OFLAG) $(OUT)-float
 double: dirs $(INPUT) 
-	$(CC) $(CFLAGS) $(XFLAGS) $(LFLAG)m $(IFLAG)$(IDIR) $(DFLAG)unix $(DFLAG)DOUBLE $(DFLAG)ILONG $(INPUT) $(OFLAG) $(OUT)-double
+	$(CC) $(CFLAGS) $(XFLAGS) $(LFLAG)m $(IFLAG)$(IDIR) $(DFLAG)RUNTM=$(runtime) $(DFLAG)unix $(DFLAG)DOUBLE $(DFLAG)ILONG $(INPUT) $(OFLAG) $(OUT)-double
 ldouble: dirs $(INPUT) 
-	$(CC) $(CFLAGS) $(XFLAGS) $(LFLAG)m $(IFLAG)$(IDIR) $(DFLAG)unix $(DFLAG)LDOUBLE $(DFLAG)ILONG $(INPUT) $(OFLAG) $(OUT)-ldouble
+	$(CC) $(CFLAGS) $(XFLAGS) $(LFLAG)m $(IFLAG)$(IDIR) $(DFLAG)RUNTM=$(runtime) $(DFLAG)unix $(DFLAG)LDOUBLE $(DFLAG)ILONG $(INPUT) $(OFLAG) $(OUT)-ldouble
 ###########################################################################
 # FILESYSTEM CLEANUP OPERATIONS // DO NOT MODIFY BEYOND THIS POINT ********
 ###########################################################################

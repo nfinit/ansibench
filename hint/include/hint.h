@@ -85,11 +85,14 @@
 #define NTRIAL     15       /* Normal number of times to run a trial           */
                            /* Increase if computer is prone to interruption   */
 #define PATIENCE   13      /* Number of times to rerun a bogus trial          */
+
+#ifndef RUNTM
 #define RUNTM      1.0    /* Target time, seconds. Reduce for high-res timer.*/
+#endif
                            /* Should be much larger than timer resolution.    */
 #define STOPRT     0.1     /* Ratio of current to peak QUIPS to stop at       */
                            /* Smaller numbers will beat on virtual memory.    */
-#define STOPTM     100     /* Longest time acceptable, seconds.  Most systems */
+#define STOPTM     240     /* Longest time acceptable, seconds.  Most systems */
                            /* run out of decent-speed memory well before this */
 #define MXPROC     32      /* Maximum number of processors to use in shared   */                           /* memory configuration. Adjust as necessary.      */
 
