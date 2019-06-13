@@ -136,6 +136,16 @@ double-precision performance. Both are identical in functionality.
 Running LINPACK with `make run` will run both the single-precision and 
 double-precision versions of the benchmark.
 
+##### Building LINPACK in non-Unix environments
+
+###### CodeWarrior on Macintosh
+
+The LINPACK sources included in this package build easily under CodeWarrior on the Classic Macintosh with no modification required, using the SIOUX (Simple Input and Output User eXchange) library to provide a text console interface for input and output.
+
+Because CodeWarrior cannot utilize the included makefiles, the source files must be manually included in a CodeWarrior project with appropriate build targets specified for single and double-precision executables. Because LINPACK builds by default in double-precision mode, the symbol `SP` must be defined at compile time to override this, typically accomplished using a command-line option such as `-DSP` when calling GCC, for example.
+
+Rather than using command-line options to define symbols prior to compilation, CodeWarrior instead utilizes "prefix files," and to this end a simple header file `sp.h` is included in the LINPACK `utils` directory to define `SP` at compile time. **Simply include `sp.h` in your project and reference it as a prefix file in your build target to build a single-precision executable.**
+
 ##### [LINPACK results](http://github.com/nfinit/ansibench/wiki/LINPACK-results) 
 ---------------------------------------------------------------------------
 #### STREAM
