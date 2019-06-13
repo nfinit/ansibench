@@ -420,9 +420,10 @@ be updated to accomodate for this.
 Although released in 1994, the Hierarchical INTegration (HINT) benchmark is considered a 
 "modern" benchmark due to its novel and innovative design, which evaluates a computer 
 system's performance in terms of the *quality* of a solution, rather than simply
-the overall amount of time it took to compute it, and in fact is built around a problem that
-has no concrete solution to begin with, reflecting many "real-world" problems especially in
-supercomputing where models are continuously refined, rather than solved outright.
+the overall amount of time it took to compute it, and in fact is built around a solving problem that
+has no exact, final solution, something which accurately reflects many problems encountered
+in the world of high-performance computing, where models are continuously refined and improved to gain
+more and more resolution, rather than solved outright to obtain some exact quantity or output.
 
 HINT was designed by Dr. John Gustafson and Quinn Snell of the US DoE's Ames Laboratory, 
 taking some ideas from the earlier SLALOM benchmark but with an entirely new fundamental
@@ -480,7 +481,7 @@ The data type used by HINT can be changed at compile time with the make target o
 `double` (default)
 `ldouble` (long double)
 
-HINT may system-specific overrides to compile, currently only HP-UX is
+HINT may require system-specific overrides to compile, currently only HP-UX is
 accounted for with `ov=hpux`.
 
 The HINT benchmark can take a considerably long time to run depending on the
