@@ -34,6 +34,12 @@
 #include <time.h>
 #include <float.h>
 
+#ifndef SP
+#ifndef DP
+#define DP
+#endif
+#endif
+
 #ifdef SP
 #define ZERO        0.0
 #define ONE         1.0
@@ -41,12 +47,6 @@
 #define BASE10DIG   FLT_DIG
 
 typedef float   REAL;
-#endif
-
-#ifndef SP
-#ifndef DP
-#define DP
-#endif
 #endif
 
 #ifdef DP
