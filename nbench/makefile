@@ -53,7 +53,7 @@ dirs:
 # EXECUTABLE BUILD/RUN OPTIONS // DO NOT MODIFY BEYOND THIS POINT *********
 ###########################################################################
 bin: dirs $(INPUT) 
-	$(CC) $(CFLAGS) -static $(XFLAGS) $(IFLAG)$(IDIR) $(DFLAG)LINUX $(INPUT) $(OFLAG) $(OUT) $(LFLAG)m
+	$(CC) $(CFLAGS) $(LFLAG)m $(XFLAGS) $(IFLAG)$(IDIR) $(DFLAG)LINUX $(INPUT) $(OFLAG) $(OUT)
 ###########################################################################
 # FILESYSTEM CLEANUP OPERATIONS // DO NOT MODIFY BEYOND THIS POINT ********
 ###########################################################################
