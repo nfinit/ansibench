@@ -12,13 +12,13 @@ _Jump to [modern benchmarks](http://github.com/nfinit/ansibench#modern-benchmark
           [CoreMark](http://github.com/nfinit/ansibench#coremark),
           [HINT](http://github.com/nfinit/ansibench#hint)_
 
-This repository packages a selection of ANSI C program sources useful for 
-benchmarking a wide variety of systems and compilers, including a number 
-of classic industry standard benchmarks as well as some more practical 
+This repository packages a selection of ANSI (and some K&R) C program sources 
+useful for benchmarking a wide variety of systems and compilers, including a 
+number of classic industry standard benchmarks as well as some more practical 
 programs that can also be used as benchmarks.
 
 All programs presented in this package are tested with GCC and HP C in 
-ANSI mode to ensure they function as expected.
+ANSI mode to ensure they function as expected. 
 
 Always remember that a benchmark is really only accurate for evaluating 
 a system's performance on that very specific set of operations which don't 
@@ -302,7 +302,8 @@ still often cited in marketing literature.
 
 A modern alternative to Dhrystone that attempts to provide solutions to many of its
 shortcomings is the EEMBC's [CoreMark](http://github.com/nfinit/ansibench#coremark)
-benchmark, which is also included in this package.
+benchmark, which is also included in this package and recommended for use especially
+with newer systems where Dhrystone's reporting can be quite inaccurate.
 
 The Dhrystone version included in this package is the 
 [most widely used version (2.1)](http://www.netlib.org/benchmark/dhry-c) 
