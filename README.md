@@ -371,7 +371,7 @@ on that version in 1994, describing it in BYTE's March 1995 issue.
 
 BYTEmark 2.0 and NBench are described as an "algorithm-based" suite that, while
 still synthetic, is far less so than its predecessors, evaluating a system using
-a suite fo small program kernels as opposed to simple repetitive sequences of
+a suite of small program kernels as opposed to simple repetitive sequences of
 single or similarly few instructions. In total, NBench evaluates ten algorithms:
 
 * **Numeric Sort**: Measures the time needed to sort a one-dimensional array
