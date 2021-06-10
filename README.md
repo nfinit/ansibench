@@ -6,7 +6,8 @@ _Jump to [classic benchmarks](http://github.com/nfinit/ansibench#classic-benchma
           [LINPACK](http://github.com/nfinit/ansibench#linpack), 
           [STREAM](http://github.com/nfinit/ansibench#stream),
           [Whetstone](http://github.com/nfinit/ansibench#whetstone),
-          [Dhrystone](http://github.com/nfinit/ansibench#dhrystone)_
+          [Dhrystone](http://github.com/nfinit/ansibench#dhrystone),
+          [NBench](http://github.com/nfinit/ansibench#nbench)_
           
 _Jump to [modern benchmarks](http://github.com/nfinit/ansibench#modern-benchmarks):
           [CoreMark](http://github.com/nfinit/ansibench#coremark),
@@ -354,6 +355,74 @@ variables, meaning that Dhrystone will assign some variables to dedicated proces
 registers when possible for faster access than from cache or memory.
 
 ##### [Dhrystone results](http://github.com/nfinit/ansibench/wiki/Dhrystone-results)
+---------------------------------------------------------------------------
+#### NBench
+
+Formerly known as BYTEmark or the BYTE Native Mode Benchmarks, NBench is a
+self-contained suite of synthetic benchmarks designed to test the capabilities
+of a computer's CPU, FPU and memory subsystem, scoring them using an index
+based on a Dell Pentium 90 running MS-DOS or an AMD K6-2/233 running Linux.
+
+NBench was ported to Linux by Uwe F. Mayer (who still hosts the sources on [his
+University of Utah website](http://www.math.utah.edu/~mayer/linux/bmark.html))
+in late 1996 based on BYTEmark 2.0 which was largedly developed by Rick Grehan,
+a significant contributor to BYTE's many benchmarking efforts, who started work
+on that version in 1994, describing it in BYTE's March 1995 issue.
+
+BYTEmark 2.0 and NBench are described as an "algorithm-based" suite that, while
+still synthetic, is far less so than its predecessors, evaluating a system using
+a suite fo small program kernels as opposed to simple repetitive sequences of
+single or similarly few instructions. In total, NBench evaluates ten algorithms:
+
+* **Numeric Sort**: Measures the time needed to sort a one-dimensional array
+  of signed long integers using a heapsort algorithm. Chosen as a general-purpose
+  processor performance test due to its common and fundamental nature.
+* **String Sort**: Similar to the above, but uses a heapsort algorithm to sort
+  strings of abritrary content and length rather than integers.
+* **Bitfield**: Evaluates a system's ability to manipulate single bits with
+  an algorithm best described as a simulation of how an operating system might
+  keep track of disk block allocation using a bit map in memory.
+* **Emulated Floating-Point**: A small floating point emulation software package
+  that performs fundamental arithmetic; addition, subtraction, multiplication and
+  division without the use of a hardware floating-point unit.
+* **Fourier Coefficients**: Exercises a system's trigonometric abilities by
+  calculating the first *n* Fourier coefficients for a cyclic waveform constructed
+  using a logarithmic function.
+* **Assignment Algorithm**: Performs a variety of operations on two-dimensional
+  integer arrays by solving a simulated resource allocation problem.
+* **Huffman Compression**: Uses the Huffman compression algorithm to test a system's
+  competence at a mixture of text processing, complex data management and bit
+  manipulation.
+* **IDEA Encryption**: Measures the ability of a system to encrpyt and decrypt data
+  using the International Data Encryption Algorithm (IDEA), operating on groups of
+  16 bits at a time.
+* **Neural Net**: Teaches a simple back-propagation neural network (of the type
+  originally presented by Maureen Caudill in the October 1991 BYTE article "Expert 
+  Networks") to recognize various ASCII characters. Primarily a floating-point
+  benchmark making heavy use of the exponential function.
+* **LU Decomposition**: Uses the LU Decomposition algorithm to solve systems of
+  linear equations and measure a system's fundamental floating-point capabilities.
+
+There are caveats to this suite noted by Grehan in his 1995 article,
+most notably the extremely small size of the tests - typically less than
+16 KiB. This means that NBench tests will often fit completely in a CPU's fast
+cache memories and thus their scores will represent ideal scenarios rather
+than the average case, where complex programs often do not fully fit within
+cache.
+
+NBench was designed to be highly portable and builds on most systems with ease.
+The version included in this package sports no modifications from Mayer's standard
+distribution, differing only in the way the files are structured and the way the
+benchmark is built: dynamically linked rather than statically linked due to some
+problems with the standard build method on certain (mostly embedded) systems.
+
+##### Running NBench
+
+NBench determines workloads dynamically requires no parameters from the user, 
+thus you can simply build and run it immediately with `make run` from its 
+directory.
+
+##### [NBench results](http://github.com/nfinit/ansibench/wiki/NBench-results) 
 ---------------------------------------------------------------------------
 ### Modern Benchmarks
 
