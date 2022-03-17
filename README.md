@@ -559,3 +559,5 @@ data type selected, be patient with it!
 
 ##### [HINT results](http://github.com/nfinit/ansibench/wiki/HINT-results)
 ---------------------------------------------------------------------------
+
+ 😡
