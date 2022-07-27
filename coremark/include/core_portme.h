@@ -90,16 +90,27 @@ typedef clock_t CORE_TICKS;
 /* Data Types:
 	To avoid compiler issues, define the data types that need ot be used for 8b, 16b and 32b in <core_portme.h>.
 	
-	*Imprtant*:
+	*Important*:
 	ee_ptr_int needs to be the data type used to hold pointers, otherwise coremark may fail!!!
+  2022-07-26: New compile-time macro POINTER_TYPE specified to allow this to
+              be passed in from a makefile
 */
+
+#ifndef POINTER_TYPE
+#define POINTER_TYPE ee_u32;
+#endif
+#ifdef POINTER_TYPE
+#if (POINTER_TYPE==uintptr_t)
+#include <stdint.h>
+#endif
+#endif
 typedef signed short ee_s16;
 typedef unsigned short ee_u16;
 typedef signed int ee_s32;
 typedef double ee_f32;
 typedef unsigned char ee_u8;
 typedef unsigned int ee_u32;
-typedef ee_u32 ee_ptr_int;
+typedef POINTER_TYPE ee_ptr_int;
 typedef size_t ee_size_t;
 /* align_mem:
 	This macro is used to align an offset to point to a 32b value. It is used in the Matrix algorithm to initialize the input memory blocks.

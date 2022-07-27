@@ -24,7 +24,12 @@ Original Author: Shay Gal-on
 #endif
 
 #if (MEM_METHOD==MEM_MALLOC)
+/* 2022-07-26: malloc.h is not available under macOS, where malloc() is
+ *             provided by <stdlib.h>.
+ */
+#ifndef __MACH__
 #include <malloc.h>
+#endif
 /* Function: portable_malloc
 	Provide malloc() functionality in a platform specific way.
 */

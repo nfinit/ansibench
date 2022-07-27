@@ -4,3 +4,4 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 CFLAGS += -DPERFORMANCE_RUN=1 -DITERATIONS=$(n)
 CFLAGS += -DMULTITHREAD=$(threads) -D$(multithread) 
+CFLAGS += -DPOINTER_TYPE=$(pointer)

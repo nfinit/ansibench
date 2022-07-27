@@ -6,6 +6,7 @@ threads     = 1
 multithread = USE_PTHREAD -pthread
 # multithread = USE_FORK -D_POSIX_C_SOURCE=199309L
 memory      = "\"Heap\""
+pointer     = uintptr_t
 
 ##############################################################################
 # DO NOT MODIFY BEYOND THIS POINT                                            #
