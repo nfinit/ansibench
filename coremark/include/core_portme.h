@@ -39,6 +39,9 @@ Original Author: Shay Gal-on
 	and implementation of functions thereof.
 */
 #ifndef USE_CLOCK
+#ifdef __AIX__
+#define USE_CLOCK 1
+#else
 #define USE_CLOCK 0 
 #endif
 /* Configuration: HAS_STDIO
