@@ -19,11 +19,18 @@
 /* Refer to hint.h and typedefs.h for all-capitalized definitions.            */
 #include       "hint.h"    
 
-void main(int argc, char *argv[])
+/* 2022-07-26: An apparent bug in some versions of ARM GCC erroneously
+ * optimizes out some variables in this section causing the initialization to
+ * hang determining DMAX. Because it is not essential to the benchmark itself,
+ * GCC optimization is disabled for this section                              */
+#pragma GCC push_options
+#pragma GCC optimize ("O0")
+int main(int argc, char *argv[])
 {
     FILE    *curv;        /* Output file for QUIPS curve                      */
+#ifndef DEBUG
     char    filnm[80];    /* Output file name                                 */
-
+#endif
     Speed   qdata[NSAMP]; /* Array to keep track of QUIPs and time            */
 
     ERROR   eflag;        /* Stopping condition returned from Hint            */
@@ -74,7 +81,7 @@ void main(int argc, char *argv[])
     printf("         |    |  | |  \\|   |\n");
     printf("         ^    ^  ^ ^   ^   ^\n\n");
     printf("*** The  HINT  PERFORMANCE ANALYZER ***\n");
-    printf("        Version 1.0  June 1994\n");
+    printf("   Version 1.0.1  June 1994-July 2022\n");
     printf("   John L. Gustafson & Quinn O. Snell\n");
     printf("     Scalable Computing Laboratory\n");
     printf("   236 Wilhelm, Iowa State University\n");
@@ -82,11 +89,14 @@ void main(int argc, char *argv[])
     printf("            (515) 294 - 9294\n\n");
     printf("Copyright (C) 1994");
     printf(" Iowa State University Research Foundation, Inc.\n");
-    printf("Please send results and questions to:   hint@scl.ameslab.gov\n");
+    printf("Modified for strict ANSI C compatibility 07/2022\n");
+    printf("Please send results and questions to: hint@scl.ameslab.gov\n");
     printf("When sending results please follow the form in README\n");
     printf("________________________________________________________\n");
+/* 2022-07-26: Notify user the program does not take arguments
+ *             (this resolves unused parameter warnings)                      */
+  if (argc > 1) printf("NOTE: This program does not take arguments.\n"); 
 	printf("RECT is %d bytes\n",sizeof(RECT));
-
 #ifdef DEBUG
     curv = stdout;
 #else
@@ -119,7 +129,7 @@ void main(int argc, char *argv[])
  /* We use a grid of dmax + 1 squares, but this might overflow, so back off 1.*/
     dmax = tm + (tm - 1);
     printf("Apparent number of bits of accuracy: %d\n", dbits);   
-    printf("Maximum associative whole number:    %.0lf\n",(double)dmax);
+    printf("Maximum associative whole number:    %.0f\n",(double)dmax);
 
  /* Find the largest representable index number.                              */
     ibits = 0;
@@ -134,7 +144,7 @@ void main(int argc, char *argv[])
     }
     imax = itm;
     printf("Maximum number of bits of index:     %d\n", ibits);     
-    printf("Maximum representable index:         %.0lf\n\n", (double)imax); 
+    printf("Maximum representable index:         %.0f\n\n", (double)imax); 
 
  /* Calculate usable maxima, from whichever is most restrictive.              */
     if ((ibits + ibits) < dbits)
@@ -143,7 +153,7 @@ void main(int argc, char *argv[])
         dbits = ibits + ibits;
     }
     printf("Index-limited data accuracy:         %d bits\n", dbits); 
-    printf("Maximum usable whole number:         %.0lf\n",(double)dmax);
+    printf("Maximum usable whole number:         %.0f\n",(double)dmax);
 
  /* Half the bits, biased downward, go to x.                                  */
     j = (dbits)/2;         
@@ -151,8 +161,10 @@ void main(int argc, char *argv[])
  /* Now loop to take 2 to the appropriate power for grid dimensions.          */
     for (i = 0, scx = 1; i < j; scx += scx, i++);
     for (i = 0, scy = 1; i < dbits - j; scy += scy, i++);
-    printf("Grid: %.0lf wide by %.0lf high.\n",(double)scx,(double)scy);
+    printf("Grid: %.0f wide by %.0f high.\n",(double)scx,(double)scy);
 
+ /* 2022-07-26: Initialize tscout to 0 to fix compiler warnings               */
+    tscout = 0; 
 
  /* This loop is used as a survey.                                            */
     for (nscout = NMIN, laps = 3; nscout < scx; )
@@ -186,12 +198,11 @@ void main(int argc, char *argv[])
         exit(0);
     }
     if ((tscout < RUNTM) && (eflag == NOMEM))
-       printf("Memory is not sufficient for > %3.1lf second runs.\n",
+       printf("Memory is not sufficient for > %3.1f second runs.\n",
                                                                          RUNTM);
     else if (tscout < RUNTM)
-       printf("Precision is not sufficient for > %3.1lf second runs.\n",
+       printf("Precision is not sufficient for > %3.1f second runs.\n",
                                                                          RUNTM);
-
 
  /* This loop is the main loop driver of the HINT kernel.                     */
     for (t = 0, i = 0, n = NMIN, qpeak = 0, qprat = 1; 
@@ -223,14 +234,18 @@ void main(int argc, char *argv[])
     }
     memuse = (int)(qdata[i-1].n * (sizeof(RECT)+sizeof(DSIZE)+sizeof(ISIZE)));
     if ((qprat > STOPRT) && (eflag == NOMEM))
+        #if defined(ILONG)
+        printf("\nThis run was memory limited at %ld subintervals -> %d bytes\n",
+        #else
         printf("\nThis run was memory limited at %d subintervals -> %d bytes\n",
+        #endif
                                                  n, memuse);
     printf("\nDone with first pass. Now computing net QUIPS\n");
 
 	memref = (DSREFS * sizeof(DSIZE) + ISREFS * sizeof(ISIZE)) * qdata[i-1].n;
 	memref /= (1024 * 1024);
 	bandwt = memref / qdata[i-1].t;
-    fprintf(curv,"%12.10lf %lf %lf %lf %10d %lf\n", 
+    fprintf(curv,"%12.10f %f %f %f %10d %f\n", 
             qdata[i-1].t, qdata[i-1].qp, qdata[i-1].delq,
             (double)qdata[i-1].n, memuse, bandwt);
     
@@ -253,7 +268,11 @@ void main(int argc, char *argv[])
         }
         if (qdata[j+1].t < qdata[j].t)
         {
+            #if defined(ILONG)
+            printf(" Forcing a time for %ld subintervals\n", qdata[j].n);
+            #else
             printf(" Forcing a time for %d subintervals\n", qdata[j].n);
+            #endif
             qdata[j].t  = qdata[j+1].t;
 			delq = (double)dmax / gamut - 1;
             qdata[j].qp = delq / qdata[j].t + 1.0 / gamut / qdata[j].t;
@@ -262,7 +281,7 @@ void main(int argc, char *argv[])
 		memref = (DSREFS * sizeof(DSIZE) + ISREFS * sizeof(ISIZE)) * qdata[j].n;
 		memref /= (1024 * 1024);
 		bandwt = memref / qdata[j].t;
-        fprintf(curv,"%12.10lf %lf %lf %lf %10d %lf\n", 
+        fprintf(curv,"%12.10f %f %f %f %10d %f\n", 
                 qdata[j].t, qdata[j].qp, qdata[j].delq,
                 (double)qdata[j].n, memuse, bandwt);
 
@@ -271,11 +290,11 @@ void main(int argc, char *argv[])
         qptmp = qdata[j].qp * qdata[j].t / qdata[j+1].t;
         qpnet += (qdata[j].qp - qptmp);
     }
-    printf("\nFinished with %lf net QUIPs\n", qpnet);
+    printf("\nFinished with %f net QUIPs\n", qpnet);
     fclose(curv);
+    return 0;
 }
-
-
+#pragma GCC push_options
 
 double
 Run(int laps,
@@ -335,7 +354,7 @@ Run(int laps,
     
 /* Return the current time in seconds, using a double precision number.       */
 double
-When()
+When(void)
 {
     struct timeval tp;
     gettimeofday(&tp, NULL);

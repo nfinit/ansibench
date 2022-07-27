@@ -1,71 +1,49 @@
-###########################################################################
-# STANDARD COMPILER CONFIGURATION *****************************************
-# By default, this makefile produces an unoptimized executable with GCC.
-# It's recommended to choose or build a proper compiler configuration for
-# your system in the "override" directory, specify these overrides with
-# the argument "occ=[file without extension]" when making the executables.
-###########################################################################
-CC = gcc
-CFLAGS = -ansi
-###########################################################################
-# ADVANCED COMPILER CONFIGURATION *****************************************
-# Configures standard libraries and compiler flags to ensure portability
-# It's recommended to override these with a separate file as well.
-###########################################################################
-DFLAG  = -D
-IFLAG  = -I
-OFLAG  = -o
-###########################################################################
-# PORTING CONFIGURATION ***************************************************
-# Override the default porting directory by with "port=[port_dir]"
-###########################################################################
-port=ansibench
-###########################################################################
-# PATH CONFIGURATION ******************************************************
-# Default paths for storage and searching.
-###########################################################################
-OVERRIDE   = ../override
-OVERRIDECC = $(OVERRIDE)/cc
-OVERRIDECM = $(OVERRIDE)/coremark
-SDIR       = ./src
-BDIR       = ./bin
-IDIR	   = ./include
-###########################################################################
-# FILE AND EXECUTABLE CONFIGURATION ***************************************
-# Change these only if you'd like different names for the executables or
-# have renamed the input source files.
-###########################################################################
-INPUT = $(SDIR)/core_main.c $(SDIR)/core_matrix.c $(SDIR)/core_list_join.c $(SDIR)/core_state.c $(SDIR)/core_util.c $(SDIR)/core_portme.c
-OUT =   $(BDIR)/coremark
-###########################################################################
-# MISCELLANEOUS CONFIGURATION *********************************************
-###########################################################################
-n=20000
-###########################################################################
-# OVERRIDE INCLUDES // DO NOT MODIFY BEYOND THIS POINT ********************
-###########################################################################
--include $(OVERRIDECC)/$(occ).mk
--include $(OVERRIDECM)/$(ov).mk
-###########################################################################
-# BUILD/RUN OPERATIONS // DO NOT MODIFY BEYOND THIS POINT *****************
-###########################################################################
+# DEFAULT BENCHMARK CONFIGURATION
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cc          = gcc
+n           = 20000
+threads     = 1 
+multithread = USE_PTHREAD -pthread
+# multithread = USE_FORK -D_POSIX_C_SOURCE=199309L
+memory      = "\"Heap\""
+
+##############################################################################
+# DO NOT MODIFY BEYOND THIS POINT                                            #
+##############################################################################
+-include ../mk/$(cc)/stdflags.mk
+-include ../mk/$(cc)/opt/$(opt).mk
+-include ../mk/$(cc)/xflags/$(xflags).mk
+-include ../mk/$(cc)/coremark/stdflags.mk
+-include ../mk/$(cc)/coremark/$(platform).mk
+# ----------------------------------------------------------------------------
+BINDIR = ./bin
+OUT    = $(BINDIR)/coremark
+INPUT  = ./src/core_main.c ./src/core_matrix.c ./src/core_list_join.c
+INPUT += ./src/core_state.c ./src/core_util.c ./src/core_portme.c
+# ----------------------------------------------------------------------------
+CARGS  += -DCOMPILER_FLAGS="\"$(OPTLEVEL)\"" -DMEM_LOCATION=$(memory)
+CARGS  += -o$(OUT) $(OPTLEVEL) $(CFLAGS) $(XCFLAGS) $(INPUT)
+# ----------------------------------------------------------------------------
+LOGDIR = ./log
+RUNLOG = "$(LOGDIR)/run-$(cc).txt"
+# ----------------------------------------------------------------------------
 all: bin 
-run: all 
-	@$(OUT) 0x0 0x0 0x66 $(n) 7 1 2000
+run: all
+	@date
+	@echo "" >> $(RUNLOG)
+	@echo -n ">>> " >> $(RUNLOG)
+	@date >> $(RUNLOG)
+	@echo "Running CoreMark..." 
+	@$(OUT) 0x0 0x0 0x66 $(n) 7 1 2000 2>&1 | tee -a $(RUNLOG)
 dirs:
-	@mkdir -p $(BDIR)
-###########################################################################
-# EXECUTABLE BUILD/RUN OPTIONS // DO NOT MODIFY BEYOND THIS POINT *********
-###########################################################################
-bin: dirs $(INPUT) 
-	$(CC) $(CFLAGS) $(XFLAGS) $(IFLAG)$(IDIR) $(DFLAG)COMPILER_FLAGS=\"$(CFLAGS)\" $(DFLAG)PERFORMANCE_RUN=1 $(DFLAG)ITERATIONS=$(n) $(INPUT) $(OFLAG) $(OUT)
-###########################################################################
-# FILESYSTEM CLEANUP OPERATIONS // DO NOT MODIFY BEYOND THIS POINT ********
-###########################################################################
+	@mkdir -p $(BINDIR)
+	@mkdir -p $(LOGDIR)
+bin: dirs
+	$(CC) $(CARGS) 
 clean:
 	@-rm -f $(OUT) core a.out *.o
-	@-rm -f $(BDIR)/*
-	@-rmdir $(BDIR)
-###########################################################################
-# END OF MAKEFILE *********************************************************
-###########################################################################
+	@-rm -f $(BINDIR)/*
+	@-rmdir $(BINDIR)
+clean-log:
+	@-rm -f $(LOGDIR)/*
+	@-rmdir $(LOGDIR)

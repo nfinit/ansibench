@@ -4,11 +4,12 @@
  *                   "DHRYSTONE" Benchmark Program
  *                   -----------------------------
  *                                                                            
- *  Version:    C, Version 2.1
+ *  Version:    C, Version 2.2
  *                                                                            
  *  File:       dhry_1.c (part 2 of 3)
  *
- *  Date:       May 25, 1988
+ *  Date:        May 25, 1988
+ *              July 26, 2022 (modified for strict ANSI C compliance)
  *
  *  Author:     Reinhold P. Weicker
  *

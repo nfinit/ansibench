@@ -145,7 +145,7 @@ typedef ISIZE ERROR;
 /*      Prototypes                                                            */
 /******************************************************************************/
 #pragma mips_frequency_hint FREQUENT When
-double  When();
+double  When(void);
 
 double
 Run(int laps,

@@ -58,6 +58,11 @@ typedef float   REAL;
 typedef double  REAL;
 #endif
 
+/* 2022-07-26: Macro defined for memreq variable to resolve warnings
+ *             during malloc check
+ */                                    
+#define MEM_T long
+
 static REAL linpack  (long nreps,int arsize);
 static void matgen   (REAL *a,int lda,int n,REAL *b,REAL *norma);
 static void dgefa    (REAL *a,int lda,int n,int *ipvt,int *info,int roll);
@@ -79,8 +84,9 @@ int main(int argc, char **argv)
     {
     char    buf[80];
     int     arsize;
-    long    arsize2d,memreq,nreps;
+    long    arsize2d,nreps;
     size_t  malloc_arg;
+    MEM_T   memreq;
 
     while (1)
         {
@@ -108,7 +114,7 @@ int main(int argc, char **argv)
         arsize2d = (long)arsize*(long)arsize;
         memreq=arsize2d*sizeof(REAL)+(long)arsize*sizeof(REAL)+(long)arsize*sizeof(int);
         malloc_arg=(size_t)memreq;
-        if (malloc_arg!=memreq || (mempool=malloc(malloc_arg))==NULL)
+        if ((MEM_T)malloc_arg!=memreq || (mempool=malloc(malloc_arg))==NULL)
             {
             printf("Not enough memory available for given array size.\n");
 	    if (argc > 1) break;
