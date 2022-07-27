@@ -44,6 +44,7 @@ Original Author: Shay Gal-on
 #else
 #define USE_CLOCK 0 
 #endif
+#endif
 /* Configuration: HAS_STDIO
 	Define to 1 if the platform has stdio.h.
 */
