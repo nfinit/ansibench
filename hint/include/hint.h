@@ -101,10 +101,18 @@
 /******************************************************************************/
 #define DSREFS     90
 #define ISREFS     10
+#ifndef HI
 #define HI         0       /* Index of high values                            */
+#endif
+#ifndef LO
 #define LO         1       /* Index of low values                             */
+#endif
+#ifndef TRUE
 #define TRUE       (1==1)  /* Self explanatory                                */
+#endif
+#ifndef FALSE
 #define FALSE      (1==0)  /* Self explanatory                                */
+#endif
 #define MSIZE      int     /* Integral type for allocating memory             */
 #define NMIN       2       /* Minimum number of subintervals                  */
 #define ANSWER     0.38629436111989061883446424291653136151000 /*  roughly!!! */
