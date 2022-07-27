@@ -1,0 +1,12 @@
+0.3.2
+	Reduced bottlenecking, 2.5% performace increase.
+0.3.1
+	Improved rate averaging function
+	Prevent PRNG seeds from being seeded sequentially.
+	Improved per-thread PRNG seed distribution
+0.3.0
+	Improved PRNG, yields 10% performance increase. 
+0.2.1
+	Added OS X support.
+0.2.0
+	Initial release.
