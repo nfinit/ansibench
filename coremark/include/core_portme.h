@@ -173,6 +173,9 @@ typedef size_t ee_size_t;
 */
 #ifndef USE_PTHREAD
 #define USE_PTHREAD 0
+#elif (MULTITHREAD==1)
+#undef USE_PTHREAD
+#define USE_PTHREAD 0
 #else
 #include <pthread.h>
 #endif
