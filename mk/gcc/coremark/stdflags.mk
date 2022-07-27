@@ -1,7 +1,6 @@
-# Standard flags for CoreMark on GCC
-# - Set PERFORMANCE_RUN flag and base iterations
-# - Configure multithreading
+# Standard flags for CoreMark with GCC
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+CFLAGS += -D_POSIX_C_SOURCE=199309L
 CFLAGS += -DPERFORMANCE_RUN=1 -DITERATIONS=$(n)
 CFLAGS += -DMULTITHREAD=$(threads) -D$(multithread) 
 CFLAGS += -DPOINTER_TYPE=$(pointer)
