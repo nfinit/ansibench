@@ -97,11 +97,11 @@ typedef clock_t CORE_TICKS;
 */
 
 #ifndef POINTER_TYPE
-#define POINTER_TYPE ee_u32;
-#endif
-#ifdef POINTER_TYPE
-#if (POINTER_TYPE==uintptr_t)
+#ifdef UINTPTR_TYPE
 #include <stdint.h>
+#define POINTER_TYPE uintptr_t
+#else
+#define POINTER_TYPE ee_u32
 #endif
 #endif
 typedef signed short ee_s16;

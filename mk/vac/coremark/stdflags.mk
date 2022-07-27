@@ -1,0 +1,1 @@
+../../gcc/coremark/stdflags.mk

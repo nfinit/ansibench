@@ -6,7 +6,7 @@ threads     = 1
 multithread = USE_PTHREAD -pthread
 # multithread = USE_FORK
 memory      = "\"Heap\""
-pointer     = uintptr_t
+pointer     = -DUINTPTR_TYPE
 
 ##############################################################################
 # DO NOT MODIFY BEYOND THIS POINT                                            #

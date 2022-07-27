@@ -7,6 +7,6 @@
 CC        = gcc
 OPTLEVEL  = -O2
 CFLAGS   += -I./include
-CFLAGS   += -g -ansi -Wall -Wextra -pedantic
-CFLAGS   += -Wmissing-prototypes -Wstrict-prototypes -Wold-style-definition
+CFLAGS   += -g -ansi -Wall -pedantic
+CFLAGS   += -Wmissing-prototypes -Wstrict-prototypes
 CFLAGS   += -Wno-unknown-pragmas
