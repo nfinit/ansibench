@@ -10,7 +10,7 @@ n           = 100
 -include ../mk/$(cc)/opt/$(opt).mk
 -include ../mk/$(cc)/xflags/$(xflags).mk
 -include ../mk/$(cc)/linpack/stdflags.mk
--include ../mk/$(cc)/linpack/$(platform).mk
+-include ../mk/$(cc)/linpack/platforms/$(platform).mk
 # ----------------------------------------------------------------------------
 BINDIR = ./bin
 OUT    = $(BINDIR)/linpack

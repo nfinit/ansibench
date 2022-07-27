@@ -11,7 +11,7 @@ mp      = -fopenmp
 -include ../mk/$(cc)/opt/$(opt).mk
 -include ../mk/$(cc)/xflags/$(xflags).mk
 -include ../mk/$(cc)/tripforce/stdflags.mk
--include ../mk/$(cc)/tripforce/$(platform).mk
+-include ../mk/$(cc)/tripforce/platforms/$(platform).mk
 # ----------------------------------------------------------------------------
 BINDIR = ./bin
 OUT    = $(BINDIR)/tripforce

@@ -10,7 +10,7 @@ n  = 1000000
 -include ../mk/$(cc)/opt/$(opt).mk
 -include ../mk/$(cc)/xflags/$(xflags).mk
 -include ../mk/$(cc)/whetstone/stdflags.mk
--include ../mk/$(cc)/whetstone/$(platform).mk
+-include ../mk/$(cc)/whetstone/platforms/$(platform).mk
 # ----------------------------------------------------------------------------
 BINDIR = ./bin
 OUT    = $(BINDIR)/whetstone

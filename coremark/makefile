@@ -17,7 +17,7 @@ memory      = "\"Heap\""
 -include ../mk/$(cc)/opt/$(opt).mk
 -include ../mk/$(cc)/xflags/$(xflags).mk
 -include ../mk/$(cc)/coremark/stdflags.mk
--include ../mk/$(cc)/coremark/$(platform).mk
+-include ../mk/$(cc)/coremark/platforms/$(platform).mk
 # ----------------------------------------------------------------------------
 BINDIR = ./bin
 OUT    = $(BINDIR)/coremark
