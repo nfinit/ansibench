@@ -17,7 +17,7 @@ BINDIR = ./bin
 OUT    = $(BINDIR)/tripforce
 INPUT  = ./src/tripforce.c
 # ----------------------------------------------------------------------------
-CARGS  += -o$(OUT) $(OPTLEVEL) $(CFLAGS) $(XCFLAGS) $(INPUT)
+CARGS  += $(INPUT) -o$(OUT) $(OPTLEVEL) $(CFLAGS) $(XCFLAGS)
 # ----------------------------------------------------------------------------
 all: bin 
 run: all
