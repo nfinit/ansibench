@@ -3,4 +3,5 @@
 CFLAGS += -D_POSIX_C_SOURCE=199309L
 CFLAGS += -DPERFORMANCE_RUN=1 -DITERATIONS=$(n)
 CFLAGS += -DMULTITHREAD=$(threads) -D$(multithread) 
-CFLAGS += $(pointer)
+CFLAGS += -D$(pointer)
+CFLAGS += -DUSE_CLOCK=$(use_clock)

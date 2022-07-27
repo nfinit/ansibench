@@ -5,8 +5,11 @@ n           = 20000
 threads     = 1 
 multithread = USE_PTHREAD -pthread
 # multithread = USE_FORK
+# multithread = DUMMY_NO_MULTITHREAD
+use_clock   = 1
+pointer     = USE_UINTPTR
+# pointer    = DUMMY_NO_PTR
 memory      = "\"Heap\""
-pointer     = -DUINTPTR_TYPE
 
 ##############################################################################
 # DO NOT MODIFY BEYOND THIS POINT                                            #
