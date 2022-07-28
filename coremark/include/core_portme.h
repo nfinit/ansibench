@@ -18,6 +18,7 @@ Original Author: Shay Gal-on
 
 #ifndef CORE_PORTME_H
 #define CORE_PORTME_H
+#endif
 /************************/
 /* Data types and settings */
 /************************/
@@ -37,6 +38,8 @@ Original Author: Shay Gal-on
 /* Configuration: USE_CLOCK
 	Define to 1 if platform has the time.h header file,
 	and implementation of functions thereof.
+  ANSIbench notes:
+  - This is defined to 1 by default on AIX based on testing with v4.3
 */
 #ifndef USE_CLOCK
 #ifdef _AIX
