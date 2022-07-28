@@ -162,7 +162,7 @@
  *                      run this program, which will (erroneously) include
  *                      the time to allocate storage (malloc) and to perform
  *                      the initialization.
- *              -DHZ=nnn
+ *              -DDHRY_HZ=nnn
  *                      In Berkeley UNIX, the function "times" returns process
  *                      time in 1/HZ seconds, with HZ = 60 for most systems.
  *                      CHECK YOUR SYSTEM DESCRIPTION BEFORE YOU JUST APPLY
@@ -345,6 +345,15 @@
  */
 
 /* Compiler and system dependent definitions: */
+
+/* AIX-specific definitions */
+#ifdef _AIX
+#ifndef _H_M_PARAM
+#ifndef HZ
+#define HZ DHRY_HZ
+#endif
+#endif
+#endif
 
 #ifndef TIME
 #undef TIMES

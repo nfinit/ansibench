@@ -2,4 +2,4 @@
 # - Set up timing parameters
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 REGFLAG = -DREG=register
-CFLAGS += -D$(time) -DHZ=$(hz)
+CFLAGS += -D$(time) -DDHRY_HZ=$(hz)
