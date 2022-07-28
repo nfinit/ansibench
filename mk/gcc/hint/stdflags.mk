@@ -5,4 +5,3 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 CFLAGS += -DRUNTM=$(runtime)
 CFLAGS += -lm
-CFLAGS += -Wno-type-limits
