@@ -39,7 +39,7 @@ Original Author: Shay Gal-on
 	and implementation of functions thereof.
 */
 #ifndef USE_CLOCK
-#ifdef __AIX__
+#ifdef _AIX
 #define USE_CLOCK 1
 #else
 #define USE_CLOCK 0 
