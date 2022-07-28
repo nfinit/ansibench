@@ -41,7 +41,7 @@ Original Author: Shay Gal-on
   - This is defined to 1 by default on AIX based on testing with v4.3
 */
 #ifndef USE_CLOCK
-#ifdef _AIX
+#if defined(_AIX)
 #define USE_CLOCK 1
 #else
 #define USE_CLOCK 0 
