@@ -18,7 +18,6 @@ Original Author: Shay Gal-on
 
 #ifndef CORE_PORTME_H
 #define CORE_PORTME_H
-#endif
 /************************/
 /* Data types and settings */
 /************************/
