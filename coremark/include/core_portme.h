@@ -18,6 +18,10 @@ Original Author: Shay Gal-on
 
 #ifndef CORE_PORTME_H
 #define CORE_PORTME_H
+
+/* Include ANSIbench platform-specific definitions */
+#include "core_platform.h"
+
 /************************/
 /* Data types and settings */
 /************************/
@@ -37,15 +41,9 @@ Original Author: Shay Gal-on
 /* Configuration: USE_CLOCK
 	Define to 1 if platform has the time.h header file,
 	and implementation of functions thereof.
-  ANSIbench notes:
-  - This is defined to 1 by default on AIX based on testing with v4.3
 */
 #ifndef USE_CLOCK
-#if defined(_AIX)
 #define USE_CLOCK 1
-#else
-#define USE_CLOCK 0 
-#endif
 #endif
 /* Configuration: HAS_STDIO
 	Define to 1 if the platform has stdio.h.
