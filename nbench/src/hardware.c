@@ -42,7 +42,7 @@ static void removeNewLine(char * s) {
 static void runCommand (const char *command, char *result) {
   FILE * pipe;
 
-  pipe = popen(command, "r");
+  pipe = (FILE*)popen(command, "r");
   if(pipe == NULL) {
     /* command failed */
     result[0] = '\0';
