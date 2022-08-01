@@ -135,7 +135,7 @@ void print_error(enum _error err)
 
 /* INTERFACE */
 
-void cli_splash(const unsigned num_cores)
+void cli_splash(const unsigned int num_cores)
 {
 	fprintf(stdout, "%s %s\n", GLOBAL.name, GLOBAL.version);
 	fprintf(stdout, "%s\nReleased under the %s.\n", GLOBAL.author, GLOBAL.license);
@@ -143,7 +143,7 @@ void cli_splash(const unsigned num_cores)
 	if (num_cores > 1)
 		fputc('s', stdout);
 	fprintf(stdout, ".%c", '\n');
-	unsigned i;
+	unsigned int i;
 	for (i = 0; i < 64; i++)
 		fprintf(stdout, "%c", '-');
 	fprintf(stdout, "%c", '\n');
@@ -158,7 +158,7 @@ void cli_help_msg(void)
 	fprintf(stdout, "\t-i\t Case agnostic search.\n");
 	fprintf(stdout, "\t-h\t Display this help screen.\n");
 	fprintf(stdout, "note:\n");
-	unsigned i;
+	unsigned int i;
 	for (i = 1; i < NUM_OF_ERRORS; i++)
 	{
 		fprintf(stdout, "\t%s\n", ERROR_LIST[i].msg);
@@ -181,7 +181,7 @@ int validate_query(const char *query)
 		print_error(ERROR_QUERY_LENGTH);
 		return 0;
 	}
-	unsigned i;
+	unsigned int i;
 	for (i = 0; i < len; i++) /* valid character range? */
 	{
 		if ( !( (query[i] >= '.' && query[i] <= '9') ||
@@ -229,7 +229,7 @@ int qrand(void)
 void seed_qrand_r(unsigned *seeds, unsigned num)
 {
 	/* populate array of reentrant qrand seeds */
-	unsigned i;
+	unsigned int i;
 	for (i = 0; i < num; i++)
 	{
 		int random_value = 0;
@@ -278,7 +278,7 @@ unsigned trip_frequency(enum _avg_stats mode)
 
 float trip_rate_condense(const unsigned rate, char *prefix)
 {
-	/* 32-bit unsigned int counter overflows at 4.29 gTrip/s
+	/* 32-bit unsigned int int counter overflows at 4.29 gTrip/s
 	   Future versions can take advantage of 64-bit unsigned long long int
 	   which goes up to 18.44 eTrips/s at a performance hit of ~2% */
 	#define K_TRIP 1000.0f
@@ -291,7 +291,7 @@ float trip_rate_condense(const unsigned rate, char *prefix)
 		K_TRIP * K_TRIP * K_TRIP, /* gigatrip */
 		K_TRIP * K_TRIP * K_TRIP * K_TRIP, /* teratrip */
 	};
-	unsigned i;
+	unsigned int i;
 	for (i = 0; i < MAGS; i++)
 	{
 		if (rate < trip_magnitude[i] && i != 0)
@@ -385,10 +385,10 @@ char *strcasestr(const char *haystack, const char *needle)
 	 */
 	unsigned len_h = strlen(haystack);
 	unsigned len_n = strlen(needle);
-	unsigned i, j;
+	unsigned int i, j;
 	for (i = 0; i < len_h; i++)
 	{
-		unsigned matches = 0;
+		unsigned int matches = 0;
 		for (j = 0; j < len_n; j++)
 		{
 			if (i + len_n <= len_h) /* bounds checking */
@@ -423,7 +423,7 @@ void determine_match(pmode_t mode, char *query, char *trip, char *password, omp_
 	print:
 	{
 		char prefix = '\0'; /* get average speed and condense it */
-		unsigned avg_rate = trip_frequency(FETCH_DATA);
+		unsigned int avg_rate = trip_frequency(FETCH_DATA);
 		float avg_float = trip_rate_condense(avg_rate, &prefix);
 
 		omp_set_lock(io_lock);
@@ -441,14 +441,14 @@ int main(int argc, char **argv)
 	omp_lock_t io_lock;
 	omp_init_lock(&io_lock); /* forced blocking I/O */
   #ifdef _OPENMP
-	const unsigned NUM_CORES = omp_get_num_procs();
+	const unsigned int NUM_CORES = omp_get_num_procs();
   #else
-	const unsigned NUM_CORES = 1;
+	const unsigned int NUM_CORES = 1;
   #endif
 	cli_splash(NUM_CORES);
 
 	seed_qrand(time(NULL)); /* per-thread reentrant PRNG seeds */
-	unsigned qrand_seeds[NUM_CORES];
+	unsigned int qrand_seeds[NUM_CORES];
 	seed_qrand_r(qrand_seeds, NUM_CORES);
 
 	pmode_t mode;
@@ -471,9 +471,9 @@ int main(int argc, char **argv)
 #endif
 	{
     #ifdef _OPENMP
-		const unsigned THREAD_ID = omp_get_thread_num();
+		const unsigned int THREAD_ID = omp_get_thread_num();
     #else
-		const unsigned THREAD_ID = 0; /* single thread */ 
+		const unsigned int THREAD_ID = 0; /* single thread */ 
     #endif
 		while (1)
 		{
