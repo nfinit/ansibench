@@ -453,11 +453,10 @@ int main(int argc, char **argv)
 
   #ifdef _OPENMP
   	NUM_CORES = omp_get_num_procs();
-    unsigned int qrand_seeds[NUM_CORES];
   #else
     NUM_CORES = 1;
-    unsigned int qrand_seeds[1];
   #endif
+  unsigned int qrand_seeds[NUM_CORES];
 
 	cli_splash(NUM_CORES);
 	omp_init_lock(&io_lock); /* forced blocking I/O */
