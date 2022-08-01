@@ -137,13 +137,13 @@ void print_error(enum _error err)
 
 void cli_splash(const unsigned int num_cores)
 {
+	unsigned int i;
 	fprintf(stdout, "%s %s\n", GLOBAL.name, GLOBAL.version);
 	fprintf(stdout, "%s\nReleased under the %s.\n", GLOBAL.author, GLOBAL.license);
 	fprintf(stdout, "Utilizing %u thread", num_cores);
 	if (num_cores > 1)
 		fputc('s', stdout);
 	fprintf(stdout, ".%c", '\n');
-	unsigned int i;
 	for (i = 0; i < 64; i++)
 		fprintf(stdout, "%c", '-');
 	fprintf(stdout, "%c", '\n');
@@ -152,13 +152,13 @@ void cli_splash(const unsigned int num_cores)
 
 void cli_help_msg(void)
 {
+	unsigned int i;
 	fprintf(stdout, "usage:\n\t%s [OPTION] \"SEARCHSTR\"\n", GLOBAL.name);
 	fprintf(stdout, "help:\n");
 	fprintf(stdout, "\t(None)\t No query. Program will print random tripcodes to stdout.\n");
 	fprintf(stdout, "\t-i\t Case agnostic search.\n");
 	fprintf(stdout, "\t-h\t Display this help screen.\n");
 	fprintf(stdout, "note:\n");
-	unsigned int i;
 	for (i = 1; i < NUM_OF_ERRORS; i++)
 	{
 		fprintf(stdout, "\t%s\n", ERROR_LIST[i].msg);
@@ -167,6 +167,7 @@ void cli_help_msg(void)
 
 int validate_query(const char *query)
 {
+	unsigned int i;
 	static const unsigned QUERY_MAX_LENGTH = 10;
 	static const unsigned TENTH_CHAR_CANDIDATES = 16;
 	static const char *tenth_char = ".26AEIMQUYcgkosw";
@@ -181,7 +182,6 @@ int validate_query(const char *query)
 		print_error(ERROR_QUERY_LENGTH);
 		return 0;
 	}
-	unsigned int i;
 	for (i = 0; i < len; i++) /* valid character range? */
 	{
 		if ( !( (query[i] >= '.' && query[i] <= '9') ||
@@ -278,6 +278,7 @@ unsigned trip_frequency(enum _avg_stats mode)
 
 float trip_rate_condense(const unsigned rate, char *prefix)
 {
+	unsigned int i;
 	/* 32-bit unsigned int int counter overflows at 4.29 gTrip/s
 	   Future versions can take advantage of 64-bit unsigned long long int
 	   which goes up to 18.44 eTrips/s at a performance hit of ~2% */
@@ -291,7 +292,6 @@ float trip_rate_condense(const unsigned rate, char *prefix)
 		K_TRIP * K_TRIP * K_TRIP, /* gigatrip */
 		K_TRIP * K_TRIP * K_TRIP * K_TRIP, /* teratrip */
 	};
-	unsigned int i;
 	for (i = 0; i < MAGS; i++)
 	{
 		if (rate < trip_magnitude[i] && i != 0)
@@ -383,12 +383,12 @@ char *strcasestr(const char *haystack, const char *needle)
 	 * eg. lowercasing the strings in advance to prevent reundant tolower() calls
 	 * but this only resulted in slower performance
 	 */
-	unsigned len_h = strlen(haystack);
-	unsigned len_n = strlen(needle);
-	unsigned int i, j;
+	unsigned int len_h = strlen(haystack);
+	unsigned int len_n = strlen(needle);
+	unsigned int i, j, matches;
 	for (i = 0; i < len_h; i++)
 	{
-		unsigned int matches = 0;
+		matches = 0;
 		for (j = 0; j < len_n; j++)
 		{
 			if (i + len_n <= len_h) /* bounds checking */
@@ -439,16 +439,16 @@ void determine_match(pmode_t mode, char *query, char *trip, char *password, omp_
 int main(int argc, char **argv)
 {
 	omp_lock_t io_lock;
-	omp_init_lock(&io_lock); /* forced blocking I/O */
   #ifdef _OPENMP
 	const unsigned int NUM_CORES = omp_get_num_procs();
   #else
 	const unsigned int NUM_CORES = 1;
   #endif
+	unsigned int qrand_seeds[NUM_CORES];
+	omp_init_lock(&io_lock); /* forced blocking I/O */
 	cli_splash(NUM_CORES);
 
 	seed_qrand(time(NULL)); /* per-thread reentrant PRNG seeds */
-	unsigned int qrand_seeds[NUM_CORES];
 	seed_qrand_r(qrand_seeds, NUM_CORES);
 
 	pmode_t mode;
