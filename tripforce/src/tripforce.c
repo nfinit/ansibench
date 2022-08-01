@@ -167,7 +167,7 @@ void cli_help_msg(void)
 
 int validate_query(const char *query)
 {
-	unsigned int i;
+	unsigned int i, len;
 	static const unsigned QUERY_MAX_LENGTH = 10;
 	static const unsigned TENTH_CHAR_CANDIDATES = 16;
 	static const char *tenth_char = ".26AEIMQUYcgkosw";
@@ -176,7 +176,7 @@ int validate_query(const char *query)
 		print_error(ERROR_NO_QUERY);
 		return 0;
 	}
-	unsigned len = strlen(query);
+	len = strlen(query);
 	if (len > QUERY_MAX_LENGTH) /* valid length? */
 	{
 		print_error(ERROR_QUERY_LENGTH);
@@ -230,12 +230,13 @@ void seed_qrand_r(unsigned *seeds, unsigned num)
 {
 	/* populate array of reentrant qrand seeds */
 	unsigned int i;
+  int j;
 	for (i = 0; i < num; i++)
 	{
 		int random_value = 0;
 		while (!random_value) /* make sure it actually attempts to randomize */
 			random_value = qrand();
-		int j = 0;
+		j = 0;
 		while (j++ != random_value)
 			qrand(); /* skip qrand() forward by a random amount */
 		seeds[i] = qrand();
@@ -383,9 +384,9 @@ char *strcasestr(const char *haystack, const char *needle)
 	 * eg. lowercasing the strings in advance to prevent reundant tolower() calls
 	 * but this only resulted in slower performance
 	 */
-	unsigned int len_h = strlen(haystack);
-	unsigned int len_n = strlen(needle);
-	unsigned int i, j, matches;
+	unsigned int i, j, matches, len_h, len_n;
+	len_h = strlen(haystack);
+	len_n = strlen(needle);
 	for (i = 0; i < len_h; i++)
 	{
 		matches = 0;
@@ -393,8 +394,9 @@ char *strcasestr(const char *haystack, const char *needle)
 		{
 			if (i + len_n <= len_h) /* bounds checking */
 			{
-				char h = haystack[i + j];
-				char n = needle[j];
+				char h, n;
+				h = haystack[i + j];
+				n = needle[j];
 				h += (h >= 'A' && h <= 'Z') ? 0x20 : 0x00;
 				n += (h >= 'A' && h <= 'Z') ? 0x20 : 0x00;
 				if (h == n)
@@ -438,12 +440,16 @@ void determine_match(pmode_t mode, char *query, char *trip, char *password, omp_
 
 int main(int argc, char **argv)
 {
-	omp_lock_t io_lock;
   #ifdef _OPENMP
 	const unsigned int NUM_CORES = omp_get_num_procs();
   #else
 	const unsigned int NUM_CORES = 1;
   #endif
+	omp_lock_t io_lock;
+	pmode_t mode;
+	char trip[DES_FCRYPT_LENGTH]; /* DES_fcrypt() asks for 14 bytes */
+	char password[PASSWORD_LENGTH + 1];
+	char salt[SALT_LENGTH + 1];
 	unsigned int qrand_seeds[NUM_CORES];
 	omp_init_lock(&io_lock); /* forced blocking I/O */
 	cli_splash(NUM_CORES);
@@ -451,7 +457,6 @@ int main(int argc, char **argv)
 	seed_qrand(time(NULL)); /* per-thread reentrant PRNG seeds */
 	seed_qrand_r(qrand_seeds, NUM_CORES);
 
-	pmode_t mode;
 	if (argc == 1)
 		mode = NO_QUERY_MODE;
 	else if (!strcmp(argv[1], "-h")) /* help screen */
@@ -480,13 +485,10 @@ int main(int argc, char **argv)
 			/* Intel Core2 Duo P8600 @ 2.401GHz w/ 2 threads
 			   CASE_SENSITIVE: 353.1 kTrips/s
 			   CASE_AGNOSTIC:  347.3 kTrips/s */
-			char password[PASSWORD_LENGTH + 1];
-			char salt[SALT_LENGTH + 1];
 			generate_password(password, &qrand_seeds[THREAD_ID]);
 			generate_salt(password, salt);
 			strip_outliers(salt);
 			replace_punctuation(salt);
-			char trip[DES_FCRYPT_LENGTH]; /* DES_fcrypt() asks for 14 bytes */
 			DES_fcrypt(password, salt, trip);
 			truncate_tripcode(trip);
 			determine_match(mode, argv[mode], trip, password, &io_lock);
