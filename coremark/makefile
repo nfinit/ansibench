@@ -3,13 +3,13 @@
 cc          = gcc
 n           = 20000
 threads     = 1 
-multithread = USE_PTHREAD -pthread
-# multithread = USE_FORK
-# multithread = DUMMY_NO_MULTITHREAD
+multithread = USE_FORK
+# multithread = USE_PTHREAD -pthread
+# multithread = DUMMY_NO_MULTITHREAD # if neither fork nor pthread is supported
 pointer     = USE_UINTPTR
-# pointer    = DUMMY_NO_PTR
-memory      = "\"Heap\""
-
+# pointer    = DUMMY_NO_PTR # to just use the default
+memory      = "\"Main memory (heap)\""
+# XCFLAGS += -lrt # for older versions of libc
 ##############################################################################
 # DO NOT MODIFY BEYOND THIS POINT                                            #
 ##############################################################################
