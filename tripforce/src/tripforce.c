@@ -17,9 +17,6 @@
 	#define omp_destroy_lock(mutex) ;
 	#define omp_set_lock(mutex) ;
 	#define omp_unset_lock(mutex) ;
-	#define omp_test_lock(mutex) 1
-	#define omp_get_num_procs(void) 1
-	#define omp_get_thread_num(void) 0
 	typedef unsigned char omp_lock_t; /* dummy mutex type */
 #endif
 
@@ -452,8 +449,15 @@ int main(int argc, char **argv)
 {
 	omp_lock_t io_lock;
 	pmode_t mode;
-	const unsigned NUM_CORES = omp_get_num_procs();
-	unsigned int qrand_seeds[NUM_CORES];
+	unsigned int NUM_CORES;
+
+  #ifdef _OPENMP
+  	NUM_CORES = omp_get_num_procs();
+    unsigned int qrand_seeds[NUM_CORES];
+  #else
+    NUM_CORES = 1;
+    unsigned int qrand_seeds[1];
+  #endif
 
 	cli_splash(NUM_CORES);
 	omp_init_lock(&io_lock); /* forced blocking I/O */
@@ -478,7 +482,12 @@ int main(int argc, char **argv)
 	#pragma omp parallel num_threads(NUM_CORES)
 #endif
 	{
-		const unsigned THREAD_ID = omp_get_thread_num();
+    unsigned int THREAD_ID;
+    #ifdef _OPENMP
+		  THREAD_ID = omp_get_thread_num();
+    #else
+		  THREAD_ID = 0;
+    #endif
 		while (1)
 		{
 			/* Intel Core2 Duo P8600 @ 2.401GHz w/ 2 threads
