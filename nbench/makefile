@@ -9,7 +9,6 @@ cc          = gcc
 -include ../mk/$(cc)/opt/$(opt).mk
 -include ../mk/$(cc)/xflags/$(xflags).mk
 -include ../mk/$(cc)/nbench/stdflags.mk
--include ../mk/$(cc)/nbench/platforms/$(platform).mk
 # ----------------------------------------------------------------------------
 BINDIR = ./bin
 OUT    = $(BINDIR)/nbench

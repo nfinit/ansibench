@@ -11,7 +11,6 @@ dtype    = double
 -include ../mk/$(cc)/opt/$(opt).mk
 -include ../mk/$(cc)/xflags/$(xflags).mk
 -include ../mk/$(cc)/hint/stdflags.mk
--include ../mk/$(cc)/hint/platforms/$(platform).mk
 # ----------------------------------------------------------------------------
 BINDIR     = ./bin
 OUT        = $(BINDIR)/hint

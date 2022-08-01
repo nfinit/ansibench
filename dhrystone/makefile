@@ -12,7 +12,6 @@ hz          = 100
 -include ../mk/$(cc)/opt/$(opt).mk
 -include ../mk/$(cc)/xflags/$(xflags).mk
 -include ../mk/$(cc)/dhrystone/stdflags.mk
--include ../mk/$(cc)/dhrystone/platforms/$(platform).mk
 # ----------------------------------------------------------------------------
 BINDIR = ./bin
 OUT    = $(BINDIR)/dhrystone

@@ -11,7 +11,6 @@ mp = -fopenmp
 -include ../mk/$(cc)/opt/$(opt).mk
 -include ../mk/$(cc)/xflags/$(xflags).mk
 -include ../mk/$(cc)/stream/stdflags.mk
--include ../mk/$(cc)/stream/platforms/$(platform).mk
 # ----------------------------------------------------------------------------
 BINDIR = ./bin
 OUT    = $(BINDIR)/stream
