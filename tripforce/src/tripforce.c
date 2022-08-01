@@ -74,8 +74,8 @@
 
 #define APPLICATION_NAME    "tripforce"
 #define APPLICATION_DESC    "tripcode bruteforcer for Futaba-style imageboards"
-#define APPLICATION_VER     "0.3.2"
-#define APPLICATION_AUTHOR  "Copyright (C) 2016 microsounds <https://github.com/microsounds>"
+#define APPLICATION_VER     "0.4.0"
+#define APPLICATION_AUTHOR  "Copyright (C) 2016-2022 microsounds <https://github.com/microsounds>"
 #define APPLICATION_LICENSE "GNU General Public License v3"
 
 /* enum value is tied to argc index by design */
