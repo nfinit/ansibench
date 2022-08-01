@@ -403,9 +403,13 @@ void determine_match(pmode_t mode, char *query, char *trip, char *password, omp_
 
 	print:
 	{
-		char prefix = '\0'; /* get average speed and condense it */
-		unsigned avg_rate = trip_frequency(FETCH_DATA);
-		float avg_float = trip_rate_condense(avg_rate, &prefix);
+		char prefix; /* get average speed and condense it */
+		unsigned int avg_rate;
+		float avg_float;
+
+		prefix = '\0'; 
+		avg_rate = trip_frequency(FETCH_DATA);
+		avg_float = trip_rate_condense(avg_rate, &prefix);
 
 		omp_set_lock(io_lock);
 		fprintf(stdout, "TRIP: '!%s' -> PASS: '%.8s' ", trip, password);
