@@ -13,7 +13,9 @@ ANSIbench platform-specific definitions for CoreMark
     defined(__linux) || defined (__LINUX) || \
     defined(__linux__) || defined (__LINUX__) || \
     defined (__gnu_linux__) || defined (__GNU_LINUX__)
+  #ifndef USE_CLOCK
   #define USE_CLOCK 0
+  #endif
 #endif
 
 /* AIX
