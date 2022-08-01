@@ -95,29 +95,12 @@ enum _avg_stats {
 
 /* ERROR HANDLING */
 
-#define NUM_OF_ERRORS 4
-
-enum _error {
-	ERROR_NO_QUERY,
-	ERROR_QUERY_LENGTH,
-	ERROR_QUERY_INVALID,
-	ERROR_QUERY_TENTH_CHAR
-};
-
-struct _error_msg {
-	enum _error err;
-	const char *msg;
-};
-
-const struct _error_msg ERROR_LIST[NUM_OF_ERRORS] = {
-	{ .err = ERROR_NO_QUERY, .msg = "You didn't provide a query string." },
-	{ .err = ERROR_QUERY_LENGTH, .msg = "Tripcodes cannot be longer than 10 characters." },
-	{ .err = ERROR_QUERY_INVALID, .msg = "Tripcodes can only contain the characters ./0-9A-Za-z" },
-	{ .err = ERROR_QUERY_TENTH_CHAR, .msg = "10th character can only be one of these characters: '.26AEIMQUYcgkosw'" }
-};
+#define ERROR_NO_QUERY         "You didn't provide a query string.\n"
+#define ERROR_QUERY_LENGTH     "Tripcodes cannot be longer than 10 characters.\n"
+#define ERROR_QUERY_INVALID    "Tripcodes can only contain the characters ./0-9A-Za-z\n"
+#define ERROR_QUERY_TENTH_CHAR "10th character can only be one of these characters: '.26AEIMQUYcgkosw'\n"
 
 /* FUNCTION PROTOTYPES */
-void print_error(enum _error err);
 void cli_splash(const unsigned int num_cores);
 void cli_help_msg(void);
 int validate_query(const char *query);
@@ -134,11 +117,6 @@ void replace_punctuation(char *salt);
 void truncate_tripcode(char *hash);
 char *strcasestr(const char *haystack, const char *needle);
 void determine_match(pmode_t mode, char *query, char *trip, char *password, omp_lock_t *io_lock);
-
-void print_error(enum _error err)
-{
-	fprintf(stderr, "[!] Error! -- %s\n", ERROR_LIST[err].msg);
-}
 
 /* INTERFACE */
 
@@ -159,17 +137,11 @@ void cli_splash(const unsigned int num_cores)
 
 void cli_help_msg(void)
 {
-	unsigned i;
 	fprintf(stdout, "usage:\n\t%s [OPTION] \"SEARCHSTR\"\n", APPLICATION_NAME);
 	fprintf(stdout, "help:\n");
 	fprintf(stdout, "\t(None)\t No query. Program will print random tripcodes to stdout.\n");
 	fprintf(stdout, "\t-i\t Case agnostic search.\n");
 	fprintf(stdout, "\t-h\t Display this help screen.\n");
-	fprintf(stdout, "note:\n");
-	for (i = 1; i < NUM_OF_ERRORS; i++)
-	{
-		fprintf(stdout, "\t%s\n", ERROR_LIST[i].msg);
-	}
 }
 
 int validate_query(const char *query)
@@ -180,13 +152,13 @@ int validate_query(const char *query)
 	static const char *tenth_char = ".26AEIMQUYcgkosw";
 	if (!query) /* string entered? */
 	{
-		print_error(ERROR_NO_QUERY);
+		fprintf(stderr, ERROR_NO_QUERY);
 		return 0;
 	}
 	len = strlen(query);
 	if (len > QUERY_MAX_LENGTH) /* valid length? */
 	{
-		print_error(ERROR_QUERY_LENGTH);
+		fprintf(stderr, ERROR_QUERY_LENGTH);
 		return 0;
 	}
 	for (i = 0; i < len; i++) /* valid character range? */
@@ -195,7 +167,7 @@ int validate_query(const char *query)
 		        (query[i] >= 'A' && query[i] <= 'Z') ||
 		        (query[i] >= 'a' && query[i] <= 'z') ) )
 		{
-			print_error(ERROR_QUERY_INVALID);
+			fprintf(stderr, ERROR_QUERY_INVALID);
 			return 0;
 		}
 	}
@@ -209,7 +181,7 @@ int validate_query(const char *query)
 		}
 		if (!match_found)
 		{
-			print_error(ERROR_QUERY_TENTH_CHAR);
+			fprintf(stderr, ERROR_QUERY_TENTH_CHAR);
 			return 0;
 		}
 	}
@@ -449,15 +421,15 @@ int main(int argc, char **argv)
 {
 	omp_lock_t io_lock;
 	pmode_t mode;
-	unsigned int NUM_CORES;
+	unsigned int NUM_CORES, *qrand_seeds;
 
   #ifdef _OPENMP
   	NUM_CORES = omp_get_num_procs();
   #else
     NUM_CORES = 1;
   #endif
-  unsigned int qrand_seeds[NUM_CORES];
 
+  qrand_seeds = (unsigned int *)malloc(sizeof(unsigned int)*NUM_CORES);
 	cli_splash(NUM_CORES);
 	omp_init_lock(&io_lock); /* forced blocking I/O */
 	seed_qrand(time(NULL)); /* per-thread reentrant PRNG seeds */
@@ -492,9 +464,12 @@ int main(int argc, char **argv)
 			/* Intel Core2 Duo P8600 @ 2.401GHz w/ 2 threads
 			   CASE_SENSITIVE: 353.1 kTrips/s
 			   CASE_AGNOSTIC:  347.3 kTrips/s */
-			char password[PASSWORD_LENGTH + 1];
-			char salt[SALT_LENGTH + 1];
-			char trip[DES_FCRYPT_LENGTH]; /* DES_fcrypt() asks for 14 bytes */
+			char *password;
+			char *salt;
+			char *trip; /* DES_fcrypt() asks for 14 bytes */
+      password = (char *)malloc(sizeof(char)*(PASSWORD_LENGTH+1));
+      salt = (char *)malloc(sizeof(char)*(SALT_LENGTH+1));
+			trip = (char *)malloc(sizeof(char)*DES_FCRYPT_LENGTH); /* DES_fcrypt() asks for 14 bytes */
 			generate_password(password, &qrand_seeds[THREAD_ID]);
 			generate_salt(password, salt);
 			strip_outliers(salt);
@@ -503,8 +478,12 @@ int main(int argc, char **argv)
 			truncate_tripcode(trip);
 			determine_match(mode, argv[mode], trip, password, &io_lock);
 			trip_frequency(COUNT_ONLY);
+      free(password);
+      free(salt);
+      free(trip);
 		}
 	}
 	omp_destroy_lock(&io_lock);
+  free(qrand_seeds);
 	return 0;
 }
