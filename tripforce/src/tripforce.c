@@ -440,7 +440,11 @@ int main(int argc, char **argv)
 {
 	omp_lock_t io_lock;
 	omp_init_lock(&io_lock); /* forced blocking I/O */
+  #ifdef _OPENMP
 	const unsigned NUM_CORES = omp_get_num_procs();
+  #else
+	const unsigned NUM_CORES = 1;
+  #endif
 	cli_splash(NUM_CORES);
 
 	seed_qrand(time(NULL)); /* per-thread reentrant PRNG seeds */
@@ -466,7 +470,11 @@ int main(int argc, char **argv)
 	#pragma omp parallel num_threads(NUM_CORES)
 #endif
 	{
+    #ifdef _OPENMP
 		const unsigned THREAD_ID = omp_get_thread_num();
+    #else
+		const unsigned THREAD_ID = 0; /* single thread */ 
+    #endif
 		while (1)
 		{
 			/* Intel Core2 Duo P8600 @ 2.401GHz w/ 2 threads
