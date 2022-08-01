@@ -34,8 +34,8 @@ long randnum(long lngval);
 */
 
 #include "nmglobal.h"
-int32 randwc(int32 num);
+n_int32 randwc(n_int32 num);
 u32 abs_randwc(u32 num);
-int32 randnum(int32 lngval);
+n_int32 randnum(n_int32 lngval);
 
 

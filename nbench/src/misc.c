@@ -49,9 +49,9 @@ long randwc(long num)
 /*
 ** Returns signed 32-bit random modulo num.
 */
-int32 randwc(int32 num)
+n_int32 randwc(n_int32 num)
 {
-	return(randnum((int32)0)%num);
+	return(randnum((n_int32)0)%num);
 }
 
 /***************************
@@ -73,10 +73,10 @@ return((unsigned long)temp);
 */
 u32 abs_randwc(u32 num)
 {
-int32 temp;		/* Temporary storage */ 
+n_int32 temp;		/* Temporary storage */ 
 
 temp=randwc(num);
-if(temp<0) temp=(int32)0-temp;
+if(temp<0) temp=(n_int32)0-temp;
 
 return((u32)temp);
 }
@@ -104,15 +104,15 @@ long randnum(long lngval)
 	return(interm);
 }
 */
-int32 randnum(int32 lngval)
+n_int32 randnum(n_int32 lngval)
 {
-	register int32 interm;
-	static int32 randw[2] = { (int32)13 , (int32)117 };
+	register n_int32 interm;
+	static n_int32 randw[2] = { (n_int32)13 , (n_int32)117 };
 
-	if (lngval!=(int32)0)
-	{	randw[0]=(int32)13; randw[1]=(int32)117; }
+	if (lngval!=(n_int32)0)
+	{	randw[0]=(n_int32)13; randw[1]=(n_int32)117; }
 
-	interm=(randw[0]*(int32)254754+randw[1]*(int32)529562)%(int32)999563;
+	interm=(randw[0]*(n_int32)254754+randw[1]*(n_int32)529562)%(n_int32)999563;
 	randw[1]=randw[0];
 	randw[0]=interm;
 	return(interm);

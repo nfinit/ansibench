@@ -47,9 +47,9 @@ extern LUStruct global_lustruct;
 /* External PROTOTYPES */
 /*extern unsigned long abs_randwc(unsigned long num);*/     /* From MISC */
 /*extern long randnum(long lngval);*/
-extern int32 randwc(int32 num);
+extern n_int32 randwc(n_int32 num);
 extern u32 abs_randwc(u32 num);
-extern int32 randnum(int32 lngval);
+extern n_int32 randnum(n_int32 lngval);
 
 extern farvoid *AllocateMemory(unsigned long nbytes,    /* From SYSSPEC */
 	int *errorcode);

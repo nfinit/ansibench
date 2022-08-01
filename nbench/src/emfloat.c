@@ -65,17 +65,17 @@ InternalFPF locFPF1,locFPF2;
 /*
 ** Reset random number generator so things repeat. Inserted by Uwe F. Mayer.
 */
-extern int32 randnum(int32 lngval);
-randnum((int32)13);
+extern n_int32 randnum(n_int32 lngval);
+randnum((n_int32)13);
 
 for(i=0;i<arraysize;i++)
 {/*       LongToInternalFPF(randwc(50000L),&locFPF1); */
-        Int32ToInternalFPF(randwc((int32)50000),&locFPF1);
+        n_int32ToInternalFPF(randwc((n_int32)50000),&locFPF1);
  /*       LongToInternalFPF(randwc(50000L)+1L,&locFPF2); */
-        Int32ToInternalFPF(randwc((int32)50000)+(int32)1,&locFPF2);
+        n_int32ToInternalFPF(randwc((n_int32)50000)+(n_int32)1,&locFPF2);
         DivideInternalFPF(&locFPF1,&locFPF2,abase+i);
  /*       LongToInternalFPF(randwc(50000L)+1L,&locFPF2); */
-        Int32ToInternalFPF(randwc((int32)50000)+(int32)1,&locFPF2);
+        n_int32ToInternalFPF(randwc((n_int32)50000)+(n_int32)1,&locFPF2);
         DivideInternalFPF(&locFPF1,&locFPF2,bbase+i);
 }
 return;
@@ -1086,12 +1086,12 @@ RoundInternalFPF(z);
 
 /**********************
 ** LongToInternalFPF **
-** Int32ToInternalFPF **
+** n_int32ToInternalFPF **
 ***********************
 ** Convert a signed (long) 32-bit integer into an internal FPF number.
 */
 /* static void LongToInternalFPF(long mylong, */
-static void Int32ToInternalFPF(int32 mylong,
+static void n_int32ToInternalFPF(n_int32 mylong,
                 InternalFPF *dest)
 {
 int i;          /* Index */
@@ -1099,12 +1099,12 @@ u16 myword;     /* Used to hold converted stuff */
 /*
 ** Save the sign and get the absolute value.  This will help us
 ** with 64-bit machines, since we use only the lower 32
-** bits just in case. (No longer necessary after we use int32.)
+** bits just in case. (No longer necessary after we use n_int32.)
 */
 /* if(mylong<0L) */
-if(mylong<(int32)0)
+if(mylong<(n_int32)0)
 {       dest->sign=1;
-        mylong=(int32)0-mylong;
+        mylong=(n_int32)0-mylong;
 }
 else
         dest->sign=0;
@@ -1206,7 +1206,7 @@ memcpy((void *)&locFPFNum,(void *)src,sizeof(InternalFPF));
 ** Set up a floating-point 10...which we'll use a lot in a minute.
 */
 /* LongToInternalFPF(10L,&IFPF10); */
-Int32ToInternalFPF((int32)10,&IFPF10);
+n_int32ToInternalFPF((n_int32)10,&IFPF10);
 
 /*
 ** Save the mantissa sign and make it positive.

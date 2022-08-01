@@ -244,10 +244,10 @@ typedef unsigned char u8;       /* Unsigned 8-bits */
 typedef unsigned short u16;     /* Unsigned 16 bits */
 #ifdef LONG64
 typedef unsigned int u32;       /* Unsigned 32 bits */
-typedef int int32;              /* Signed 32 bit integer */
+typedef int n_int32;              /* Signed 32 bit integer */
 #else
 typedef unsigned long u32;      /* Unsigned 32 bits */
-typedef long int32;              /* Signed 32 bit integer */
+typedef long n_int32;              /* Signed 32 bit integer */
 #endif
 
 /*****************

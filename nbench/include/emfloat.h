@@ -138,7 +138,7 @@ static void MultiplyInternalFPF(InternalFPF *x,InternalFPF *y,
 static void DivideInternalFPF(InternalFPF *x,InternalFPF *y, 
                         InternalFPF *z);
 /* static void LongToInternalFPF(long mylong, */
-static void Int32ToInternalFPF(int32 mylong,
+static void n_int32ToInternalFPF(n_int32 mylong,
                 InternalFPF *dest);
 #ifdef DEBUG
 static int InternalFPFToString(char *dest,
@@ -151,4 +151,4 @@ static int InternalFPFToString(char *dest,
 extern ulong StartStopwatch();
 extern ulong StopStopwatch(ulong elapsed);
 /* extern long randwc(long num); */
-extern int32 randwc(int32 num);
+extern n_int32 randwc(n_int32 num);

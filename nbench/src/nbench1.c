@@ -264,14 +264,14 @@ farlong *darray;        /* Destination array pointer */
 ** Initialize the random number generator
 */
 /* randnum(13L); */
-randnum((int32)13);
+randnum((n_int32)13);
 
 /*
 ** Load up first array with randoms
 */
 for(i=0L;i<arraysize;i++)
         /* array[i]=randnum(0L); */
-	array[i]=randnum((int32)0);
+	array[i]=randnum((n_int32)0);
 
 /*
 ** Now, if there's more than one array to load, copy the
@@ -574,7 +574,7 @@ int systemerror;                /* For holding error code */
 ** Initialize random number generator.
 */
 /* randnum(13L); */
-randnum((int32)13);
+randnum((n_int32)13);
 
 /*
 ** Start with no strings.  Initialize our current offset pointer
@@ -593,7 +593,7 @@ do
 	** there's room in the array.
 	*/
         /* stringlength=(unsigned char)((1+abs_randwc(76L)) & 0xFFL);*/
-	stringlength=(unsigned char)((1+abs_randwc((int32)76)) & 0xFFL);
+	stringlength=(unsigned char)((1+abs_randwc((n_int32)76)) & 0xFFL);
 	if((unsigned long)stringlength+curroffset+1L>=arraysize)
 	{       stringlength=(unsigned char)((arraysize-curroffset-1L) &
 				0xFF);
@@ -612,7 +612,7 @@ do
 	for(i=0;i<stringlength;i++)
 	{       *(strarray+curroffset)=
 		        /* (unsigned char)(abs_randwc((long)0xFE)); */
-			(unsigned char)(abs_randwc((int32)0xFE));
+			(unsigned char)(abs_randwc((n_int32)0xFE));
 		curroffset++;
 	}
 
@@ -1104,7 +1104,7 @@ ulong elapsed;                  /* Time to execute */
 ** Also reset the bit array we work on.
 ** added by Uwe F. Mayer
 */
-randnum((int32)13);
+randnum((n_int32)13);
 for (i=0;i<global_bitopstruct.bitfieldarraysize;i++)
 {
 #ifdef LONG64
@@ -1113,18 +1113,18 @@ for (i=0;i<global_bitopstruct.bitfieldarraysize;i++)
 	*(bitarraybase+i)=(ulong)0x55555555;
 #endif
 }
-randnum((int32)13);
+randnum((n_int32)13);
 /* end of addition of code */
 
 for (i=0;i<bitoparraysize;i++)
 {
 	/* First item is offset */
         /* *(bitoparraybase+i+i)=bitoffset=abs_randwc(262140L); */
-	*(bitoparraybase+i+i)=bitoffset=abs_randwc((int32)262140);
+	*(bitoparraybase+i+i)=bitoffset=abs_randwc((n_int32)262140);
 
 	/* Next item is run length */
 	/* *nbitops+=*(bitoparraybase+i+i+1L)=abs_randwc(262140L-bitoffset);*/
-	*nbitops+=*(bitoparraybase+i+i+1L)=abs_randwc((int32)262140-bitoffset);
+	*nbitops+=*(bitoparraybase+i+i+1L)=abs_randwc((n_int32)262140-bitoffset);
 }
 
 /*
@@ -1881,12 +1881,12 @@ ushort i,j;
 ** Reset random number generator so things repeat.
 */
 /* randnum(13L); */
-randnum((int32)13);
+randnum((n_int32)13);
 
 for(i=0;i<ASSIGNROWS;i++)
   for(j=0;j<ASSIGNROWS;j++){
     /* arraybase[i][j]=abs_randwc(5000000L);*/
-    arraybase[i][j]=abs_randwc((int32)5000000);
+    arraybase[i][j]=abs_randwc((n_int32)5000000);
   }
 
 return;
@@ -2267,14 +2267,14 @@ errorcontext="CPU:IDEA";
 ** Re-init random-number generator.
 */
 /* randnum(3L); */
-randnum((int32)3);
+randnum((n_int32)3);
 
 /*
 ** Build an encryption/decryption key
 */
 for (i=0;i<8;i++)
         /* userkey[i]=(u16)(abs_randwc(60000L) & 0xFFFF); */
-	userkey[i]=(u16)(abs_randwc((int32)60000) & 0xFFFF);
+	userkey[i]=(u16)(abs_randwc((n_int32)60000) & 0xFFFF);
 for(i=0;i<KEYLEN;i++)
 	Z[i]=0;
 
@@ -2696,7 +2696,7 @@ if(systemerror)
 ** Reset random number generator so things repeat.
 ** added by Uwe F. Mayer
 */
-randnum((int32)13);
+randnum((n_int32)13);
 create_text_block(plaintext,lochuffstruct->arraysize-1,(ushort)500);
 plaintext[lochuffstruct->arraysize-1L]='\0';
 plaintextlen=lochuffstruct->arraysize;
@@ -2774,7 +2774,7 @@ do {
 ** Grab a random word from the wordcatalog
 */
 /* wordptr=wordcatarray[abs_randwc((long)WORDCATSIZE)];*/
-wordptr=wordcatarray[abs_randwc((int32)WORDCATSIZE)];
+wordptr=wordcatarray[abs_randwc((n_int32)WORDCATSIZE)];
 MoveMemory((farvoid *)myword,
 	(farvoid *)wordptr,
 	(unsigned long)strlen(wordptr)+1);
@@ -3169,7 +3169,7 @@ errorcontext="CPU:NNET";
 **  the initial neural net state.
 */
 /* randnum(3L); */
-randnum((int32)3);
+randnum((n_int32)3);
 
 /*
 ** Read in the input and output patterns.  We'll do this
@@ -3194,7 +3194,7 @@ if(locnnetstruct->adjust==0)
 	  locnnetstruct->loops<MAXNNETLOOPS;
 	  locnnetstruct->loops++)
 	  {     /*randnum(3L); */
-		randnum((int32)3);
+		randnum((n_int32)3);
 		if(DoNNetIteration(locnnetstruct->loops)
 			>global_min_ticks) break;
 	  }
@@ -3208,7 +3208,7 @@ iterations=(double)0.0;
 
 do {
 	/* randnum(3L); */    /* Gotta do this for Neural Net */
-	randnum((int32)3);    /* Gotta do this for Neural Net */
+	randnum((n_int32)3);    /* Gotta do this for Neural Net */
 	accumtime+=DoNNetIteration(locnnetstruct->loops);
 	iterations+=(double)locnnetstruct->loops;
 } while(TicksToSecs(accumtime)<locnnetstruct->request_secs);
@@ -3699,7 +3699,7 @@ for (neurode = 0; neurode<MID_SIZE; neurode++)
 	for(i=0; i<IN_SIZE; i++)
 	{
 	        /* value=(double)abs_randwc(100000L); */
-		value=(double)abs_randwc((int32)100000);
+		value=(double)abs_randwc((n_int32)100000);
 		value=value/(double)100000.0 - (double) 0.5;
 		mid_wts[neurode][i] = value/2;
 	}
@@ -3709,7 +3709,7 @@ for (neurode=0; neurode<OUT_SIZE; neurode++)
 	for(i=0; i<MID_SIZE; i++)
 	{
 	        /* value=(double)abs_randwc(100000L); */
-		value=(double)abs_randwc((int32)100000);
+		value=(double)abs_randwc((n_int32)100000);
 		value=value/(double)10000.0 - (double) 0.5;
 		out_wts[neurode][i] = value/2;
 	}
@@ -4154,7 +4154,7 @@ double rcon;     /* Random constant */
 ** Reset random number generator
 */
 /* randnum(13L); */
-randnum((int32)13);
+randnum((n_int32)13);
 
 /*
 ** Build an identity matrix.
@@ -4163,11 +4163,11 @@ randnum((int32)13);
 */
 for(i=0;i<n;i++)
 {       /* b[i]=(double)(abs_randwc(100L)+1L); */
-	b[i]=(double)(abs_randwc((int32)100)+(int32)1);
+	b[i]=(double)(abs_randwc((n_int32)100)+(n_int32)1);
 	for(j=0;j<n;j++)
 		if(i==j)
 		        /* a[i][j]=(double)(abs_randwc(1000L)+1L); */
-			a[i][j]=(double)(abs_randwc((int32)1000)+(int32)1);
+			a[i][j]=(double)(abs_randwc((n_int32)1000)+(n_int32)1);
 		else
 			a[i][j]=(double)0.0;
 }
@@ -4211,8 +4211,8 @@ for(i=0;i<8*n;i++)
 	*/
         /* k=abs_randwc((long)n); */
         /* k1=abs_randwc((long)n); */
-	k=abs_randwc((int32)n);
-	k1=abs_randwc((int32)n);
+	k=abs_randwc((n_int32)n);
+	k1=abs_randwc((n_int32)n);
 	if(k!=k1)
 	{
 		if(k<k1) rcon=(double)1.0;

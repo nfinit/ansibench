@@ -205,7 +205,7 @@ if(global_allstats)
         loctime=localtime(&time_and_date);
         sprintf(buffer,"**Date and time of benchmark run: %s",asctime(loctime));
         output_string(buffer);
-        sprintf(buffer,"**Sizeof: char:%u short:%u int:%u long:%u u8:%u u16:%u u32:%u int32:%u\n",
+        sprintf(buffer,"**Sizeof: char:%u short:%u int:%u long:%u u8:%u u16:%u u32:%u n_int32:%u\n",
                 (unsigned int)sizeof(char),
                 (unsigned int)sizeof(short),
                 (unsigned int)sizeof(int),
@@ -213,7 +213,7 @@ if(global_allstats)
                 (unsigned int)sizeof(u8),
                 (unsigned int)sizeof(u16),
                 (unsigned int)sizeof(u32),
-                (unsigned int)sizeof(int32));
+                (unsigned int)sizeof(n_int32));
         output_string(buffer);
                 output_string("=============================================================================\n");
 }
