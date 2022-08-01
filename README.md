@@ -1,6 +1,6 @@
 [![](http://assets.amuniversal.com/a10595106d5401301d7c001dd8b71c47)](https://dilbert.com/strip/2004-12-25)
 
-# ANSI C Benchmarks for Unix and Unix-like systems
+# ANSI C (and mostly compatible) Benchmarks for Unix and Unix-like systems
 
 _Jump to [classic benchmarks](http://github.com/nfinit/ansibench#classic-benchmarks): 
           [LINPACK](http://github.com/nfinit/ansibench#linpack), 
@@ -13,22 +13,26 @@ _Jump to [modern benchmarks](http://github.com/nfinit/ansibench#modern-benchmark
           [CoreMark](http://github.com/nfinit/ansibench#coremark),
           [HINT](http://github.com/nfinit/ansibench#hint)_
 
-This repository packages a selection of ANSI (and some K&R) C program sources 
-useful for benchmarking a wide variety of systems and compilers, including a 
-number of classic industry standard benchmarks as well as some more practical 
-programs that can also be used as benchmarks.
+This repository packages a selection of C program sources useful for
+benchmarking a wide variety of systems and compilers, including a number of
+classic, industry-standard benchmarks as well as some select programs that
+can be used as benchmarks. Sources in this package generally target ANSI C 
+(ISO C90) compliance to maximize compatibility, though most benchmarks are
+still in the process of being refactored to that standard. 
 
-All programs presented in this package are tested with GCC and HP C in 
-ANSI mode to ensure they function as expected. 
+Sources in this package are at a minimum tested with GCC on Linux and a strict
+warning set. They are (variably) further tested with GCC on Mac OS, OpenBSD,
+AIX, HP-UX and other systems, as well as proprietary compilers such as IBM
+VisualAge C and HP C.
 
-Always remember that a benchmark is really only accurate for evaluating 
+Always remember that a benchmark is ultimately only accurate for evaluating 
 a system's performance on that very specific set of operations which don't 
-always reflect your system's typical workload, and thus only paints a 
-partial picture of your system's overall capabilities. Many of the programs 
-included in this package are single-threaded and very CPU-focused, and won't 
-tell you as much about your system's memory, disk, or I/O capabilities 
-among other critical architectural features that may allow it to pull 
-ahead of supposedly faster systems in many use cases.
+always reflect its typical workload, and thus only paints a partial picture of
+your system's overall capabilities. Many of the programs included in this
+package are single-threaded and very CPU-focused, and won't tell you as much
+about your system's memory, disk, or I/O capabilities among other critical
+architectural features that may allow it to pull ahead of supposedly faster
+systems in many use cases.
 
 Nonetheless, these programs are still easy and useful tools for evaluating 
 compilers and giving you a *rough* idea of how your system performs and 
