@@ -344,6 +344,13 @@
  ***************************************************************************
  */
 
+/* General definitions: */
+#include <stdlib.h>
+                /* for exit */
+#include <stdio.h>
+#include <string.h>
+                /* for strcpy, strcmp */
+
 /* Compiler and system dependent definitions: */
 
 /* AIX-specific definitions */
@@ -369,6 +376,10 @@
 #define HZ	CLK_TCK
 #endif
 		/* Use Microsoft C hi-res clock */
+
+#ifndef HZ
+#define HZ DHRY_HZ
+#endif
 
 #ifdef TIMES
 #include <sys/types.h>
@@ -405,12 +416,6 @@ typedef double measure;
 typedef float measure;
 #endif
 
-/* General definitions: */
-#include <stdlib.h>
-                /* for exit */
-#include <stdio.h>
-#include <string.h>
-                /* for strcpy, strcmp */
 
 #define Null 0 
                 /* Value of a Null pointer */
