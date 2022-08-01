@@ -72,23 +72,14 @@
  * 	 5. Return the last 10 characters
  */
 
+
 /* GLOBAL FUNCTIONALITY */
 
-struct _global {
-	const char *name;
-	const char *desc;
-	const char *version;
-	const char *author;
-	const char *license;
-};
-
-const struct _global GLOBAL = {
-	.name = "tripforce",
-	.desc = "tripcode bruteforcer for Futaba-style imageboards",
-	.version = "0.3.2",
-	.author = "Copyright (C) 2016 microsounds <https://github.com/microsounds>",
-	.license = "GNU General Public License v3"
-};
+#define APPLICATION_NAME    "tripforce"
+#define APPLICATION_DESC    "tripcode bruteforcer for Futaba-style imageboards"
+#define APPLICATION_VER     "0.3.2"
+#define APPLICATION_AUTHOR  "Copyright (C) 2016 microsounds <https://github.com/microsounds>"
+#define APPLICATION_LICENSE "GNU General Public License v3"
 
 /* enum value is tied to argc index by design */
 enum _program_mode {
@@ -128,6 +119,25 @@ const struct _error_msg ERROR_LIST[NUM_OF_ERRORS] = {
 	{ .err = ERROR_QUERY_TENTH_CHAR, .msg = "10th character can only be one of these characters: '.26AEIMQUYcgkosw'" }
 };
 
+/* FUNCTION PROTOTYPES */
+void print_error(enum _error err);
+void cli_splash(const unsigned int num_cores);
+void cli_help_msg(void);
+int validate_query(const char *query);
+void seed_qrand(unsigned seed);
+int qrand(void);
+unsigned int trip_frequency(enum _avg_stats mode);
+void seed_qrand_r(unsigned *seeds, unsigned num);
+float trip_rate_condense(const unsigned rate, char *prefix);
+void generate_password(char *password, unsigned *seed);
+void generate_salt(const char *password, char *salt);
+int qrand_r(unsigned *seed);
+void strip_outliers(char *salt);
+void replace_punctuation(char *salt);
+void truncate_tripcode(char *hash);
+char *strcasestr(const char *haystack, const char *needle);
+void determine_match(pmode_t mode, char *query, char *trip, char *password, omp_lock_t *io_lock);
+
 void print_error(enum _error err)
 {
 	fprintf(stderr, "[!] Error! -- %s\n", ERROR_LIST[err].msg);
@@ -138,8 +148,8 @@ void print_error(enum _error err)
 void cli_splash(const unsigned int num_cores)
 {
 	unsigned int i;
-	fprintf(stdout, "%s %s\n", GLOBAL.name, GLOBAL.version);
-	fprintf(stdout, "%s\nReleased under the %s.\n", GLOBAL.author, GLOBAL.license);
+	fprintf(stdout, "%s %s\n", APPLICATION_NAME, APPLICATION_VER);
+	fprintf(stdout, "%s\nReleased under the %s.\n", APPLICATION_AUTHOR, APPLICATION_LICENSE);
 	fprintf(stdout, "Utilizing %u thread", num_cores);
 	if (num_cores > 1)
 		fputc('s', stdout);
@@ -152,8 +162,8 @@ void cli_splash(const unsigned int num_cores)
 
 void cli_help_msg(void)
 {
-	unsigned int i;
-	fprintf(stdout, "usage:\n\t%s [OPTION] \"SEARCHSTR\"\n", GLOBAL.name);
+	unsigned i;
+	fprintf(stdout, "usage:\n\t%s [OPTION] \"SEARCHSTR\"\n", APPLICATION_NAME);
 	fprintf(stdout, "help:\n");
 	fprintf(stdout, "\t(None)\t No query. Program will print random tripcodes to stdout.\n");
 	fprintf(stdout, "\t-i\t Case agnostic search.\n");
@@ -230,13 +240,13 @@ void seed_qrand_r(unsigned *seeds, unsigned num)
 {
 	/* populate array of reentrant qrand seeds */
 	unsigned int i;
-  int j;
 	for (i = 0; i < num; i++)
 	{
-		int random_value = 0;
+		int j, random_value;
+		random_value = 0;
+		j = 0;
 		while (!random_value) /* make sure it actually attempts to randomize */
 			random_value = qrand();
-		j = 0;
 		while (j++ != random_value)
 			qrand(); /* skip qrand() forward by a random amount */
 		seeds[i] = qrand();
@@ -252,7 +262,7 @@ int qrand_r(unsigned *seed)
 
 /* UTILITIES */
 
-unsigned trip_frequency(enum _avg_stats mode)
+unsigned int trip_frequency(enum _avg_stats mode)
 {
 	/* returns average trip hashing rate in trips/sec */
 	static unsigned current_tally = 0;
@@ -279,12 +289,12 @@ unsigned trip_frequency(enum _avg_stats mode)
 
 float trip_rate_condense(const unsigned rate, char *prefix)
 {
-	unsigned int i;
-	/* 32-bit unsigned int int counter overflows at 4.29 gTrip/s
+	/* 32-bit unsigned int counter overflows at 4.29 gTrip/s
 	   Future versions can take advantage of 64-bit unsigned long long int
 	   which goes up to 18.44 eTrips/s at a performance hit of ~2% */
 	#define K_TRIP 1000.0f
 	#define MAGS 5
+	unsigned i;
 	static const char trip_prefix[MAGS] = {'\0', 'k', 'm', 'g', 't' };
 	static const float trip_magnitude[MAGS] = {
 		0.0, /* trip */
@@ -370,7 +380,7 @@ void replace_punctuation(char *salt)
 void truncate_tripcode(char *hash)
 {
 	/* truncate 14 byte output to 10 bytes by overlap */
-	const static unsigned char HASH_OFFSET = 3;
+	static const unsigned char HASH_OFFSET = 3;
 	memmove(hash, hash+HASH_OFFSET, TRIPCODE_LENGTH);
 	hash[TRIPCODE_LENGTH] = '\0'; /* null terminate */
 }
@@ -384,17 +394,17 @@ char *strcasestr(const char *haystack, const char *needle)
 	 * eg. lowercasing the strings in advance to prevent reundant tolower() calls
 	 * but this only resulted in slower performance
 	 */
-	unsigned int i, j, matches, len_h, len_n;
+	unsigned int len_h, len_n, i, j;
 	len_h = strlen(haystack);
 	len_n = strlen(needle);
 	for (i = 0; i < len_h; i++)
 	{
-		matches = 0;
+		unsigned matches = 0;
 		for (j = 0; j < len_n; j++)
 		{
 			if (i + len_n <= len_h) /* bounds checking */
 			{
-				char h, n;
+        char h, n;
 				h = haystack[i + j];
 				n = needle[j];
 				h += (h >= 'A' && h <= 'Z') ? 0x20 : 0x00;
@@ -425,7 +435,7 @@ void determine_match(pmode_t mode, char *query, char *trip, char *password, omp_
 	print:
 	{
 		char prefix = '\0'; /* get average speed and condense it */
-		unsigned int avg_rate = trip_frequency(FETCH_DATA);
+		unsigned avg_rate = trip_frequency(FETCH_DATA);
 		float avg_float = trip_rate_condense(avg_rate, &prefix);
 
 		omp_set_lock(io_lock);
@@ -440,20 +450,13 @@ void determine_match(pmode_t mode, char *query, char *trip, char *password, omp_
 
 int main(int argc, char **argv)
 {
-  #ifdef _OPENMP
-	const unsigned int NUM_CORES = omp_get_num_procs();
-  #else
-	const unsigned int NUM_CORES = 1;
-  #endif
 	omp_lock_t io_lock;
 	pmode_t mode;
-	char trip[DES_FCRYPT_LENGTH]; /* DES_fcrypt() asks for 14 bytes */
-	char password[PASSWORD_LENGTH + 1];
-	char salt[SALT_LENGTH + 1];
+	const unsigned NUM_CORES = omp_get_num_procs();
 	unsigned int qrand_seeds[NUM_CORES];
-	omp_init_lock(&io_lock); /* forced blocking I/O */
-	cli_splash(NUM_CORES);
 
+	cli_splash(NUM_CORES);
+	omp_init_lock(&io_lock); /* forced blocking I/O */
 	seed_qrand(time(NULL)); /* per-thread reentrant PRNG seeds */
 	seed_qrand_r(qrand_seeds, NUM_CORES);
 
@@ -475,16 +478,15 @@ int main(int argc, char **argv)
 	#pragma omp parallel num_threads(NUM_CORES)
 #endif
 	{
-    #ifdef _OPENMP
-		const unsigned int THREAD_ID = omp_get_thread_num();
-    #else
-		const unsigned int THREAD_ID = 0; /* single thread */ 
-    #endif
+		const unsigned THREAD_ID = omp_get_thread_num();
 		while (1)
 		{
 			/* Intel Core2 Duo P8600 @ 2.401GHz w/ 2 threads
 			   CASE_SENSITIVE: 353.1 kTrips/s
 			   CASE_AGNOSTIC:  347.3 kTrips/s */
+			char password[PASSWORD_LENGTH + 1];
+			char salt[SALT_LENGTH + 1];
+			char trip[DES_FCRYPT_LENGTH]; /* DES_fcrypt() asks for 14 bytes */
 			generate_password(password, &qrand_seeds[THREAD_ID]);
 			generate_salt(password, salt);
 			strip_outliers(salt);
