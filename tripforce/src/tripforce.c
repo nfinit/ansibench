@@ -3,6 +3,7 @@
 #include <string.h>
 #include <limits.h>
 #include <time.h>
+#include <signal.h>
 #include <openssl/des.h> /* Requires OpenSSL via libssl or libcrypto */
 
 #ifdef _OPENMP /* If OpenMP is not supported, multithreading is disabled. */
@@ -71,7 +72,6 @@
 
 
 /* GLOBAL FUNCTIONALITY */
-
 #define APPLICATION_NAME    "tripforce"
 #define APPLICATION_DESC    "tripcode bruteforcer for Futaba-style imageboards"
 #define APPLICATION_VER     "0.4.0"
@@ -94,14 +94,13 @@ enum _avg_stats {
 };
 
 /* ERROR HANDLING */
-
 #define ERROR_NO_QUERY         "You didn't provide a query string.\n"
 #define ERROR_QUERY_LENGTH     "Tripcodes cannot be longer than 10 characters.\n"
 #define ERROR_QUERY_INVALID    "Tripcodes can only contain the characters ./0-9A-Za-z\n"
 #define ERROR_QUERY_TENTH_CHAR "10th character can only be one of these characters: '.26AEIMQUYcgkosw'\n"
 
 /* FUNCTION PROTOTYPES */
-void cli_splash(const unsigned int num_cores);
+void cli_splash(const unsigned int num_cores, pmode_t mode);
 void cli_help_msg(void);
 int validate_query(const char *query);
 void seed_qrand(unsigned seed);
@@ -117,10 +116,13 @@ void replace_punctuation(char *salt);
 void truncate_tripcode(char *hash);
 char *strcasestr(const char *haystack, const char *needle);
 void determine_match(pmode_t mode, char *query, char *trip, char *password, omp_lock_t *io_lock);
+void sigint_stop(int signo);
+
+/* GLOBALS */
+static volatile int run_state;
 
 /* INTERFACE */
-
-void cli_splash(const unsigned int num_cores)
+void cli_splash(const unsigned int num_cores, pmode_t mode)
 {
 	unsigned int i;
 	fprintf(stdout, "%s %s\n", APPLICATION_NAME, APPLICATION_VER);
@@ -129,9 +131,13 @@ void cli_splash(const unsigned int num_cores)
 	if (num_cores > 1)
 		fputc('s', stdout);
 	fprintf(stdout, ".%c", '\n');
-	for (i = 0; i < 64; i++)
-		fprintf(stdout, "%c", '-');
-	fprintf(stdout, "%c", '\n');
+  if (mode == NO_QUERY_MODE) {
+    fprintf(stdout, "Running in benchmark mode, send break to stop.\n");
+  } else {
+	  for (i = 0; i < 64; i++)
+	  	fprintf(stdout, "%c", '-');
+	  fprintf(stdout, "%c", '\n');
+  }
 	fflush(stdout);
 }
 
@@ -396,7 +402,7 @@ void determine_match(pmode_t mode, char *query, char *trip, char *password, omp_
 	{
 		case CASE_AGNOSTIC: if (strcasestr(trip, query)) goto print; break;
 		case CASE_SENSITIVE: if (strstr(trip, query)) goto print; break;
-		case NO_QUERY_MODE: goto print; break; /* VERY SLOW */
+		case NO_QUERY_MODE: return; break; /* VERY SLOW (not anymore) */
 		default: break;
 	}
 	return;
@@ -412,13 +418,18 @@ void determine_match(pmode_t mode, char *query, char *trip, char *password, omp_
 		avg_float = trip_rate_condense(avg_rate, &prefix);
 
 		omp_set_lock(io_lock);
-		fprintf(stdout, "TRIP: '!%s' -> PASS: '%.8s' ", trip, password);
-		if (prefix)
-			fprintf(stdout, "@ %.2f %cTrip/s\n", avg_float, prefix);
-		else
-			fprintf(stdout, "@ %u Trip/s\n", avg_rate);
+	  	fprintf(stdout, "TRIP: '!%s' -> PASS: '%.8s' ", trip, password);
+	  	if (prefix)
+  			fprintf(stdout, "@ %.2f %cTrip/s\n", avg_float, prefix);
+  		else
+   			fprintf(stdout, "@ %u Trip/s\n", avg_rate);
 		omp_unset_lock(io_lock);
-	}
+  }
+}
+
+void sigint_stop(int signo) {
+  fprintf(stdout, "***Received SIGINT***\n");
+  run_state = 0;
 }
 
 int main(int argc, char **argv)
@@ -432,12 +443,6 @@ int main(int argc, char **argv)
   #else
     NUM_CORES = 1;
   #endif
-
-  qrand_seeds = (unsigned int *)malloc(sizeof(unsigned int)*NUM_CORES);
-	cli_splash(NUM_CORES);
-	omp_init_lock(&io_lock); /* forced blocking I/O */
-	seed_qrand(time(NULL)); /* per-thread reentrant PRNG seeds */
-	seed_qrand_r(qrand_seeds, NUM_CORES);
 
 	if (argc == 1)
 		mode = NO_QUERY_MODE;
@@ -453,6 +458,15 @@ int main(int argc, char **argv)
 			return 1;
 	}
 
+  run_state = 1;
+  qrand_seeds = (unsigned int *)malloc(sizeof(unsigned int)*NUM_CORES);
+	cli_splash(NUM_CORES, mode);
+	omp_init_lock(&io_lock); /* forced blocking I/O */
+	seed_qrand(time(NULL)); /* per-thread reentrant PRNG seeds */
+	seed_qrand_r(qrand_seeds, NUM_CORES);
+
+  signal(SIGINT, sigint_stop);
+
 #ifdef _OPENMP
 	#pragma omp parallel num_threads(NUM_CORES)
 #endif
@@ -463,7 +477,7 @@ int main(int argc, char **argv)
     #else
 		  THREAD_ID = 0;
     #endif
-		while (1)
+		while (run_state)
 		{
 			/* Intel Core2 Duo P8600 @ 2.401GHz w/ 2 threads
 			   CASE_SENSITIVE: 353.1 kTrips/s
@@ -486,6 +500,20 @@ int main(int argc, char **argv)
       free(salt);
       free(trip);
 		}
+	}
+	{
+		char prefix; /* get average speed and condense it */
+		unsigned int avg_rate;
+		float avg_float;
+
+		prefix = '\0'; 
+		avg_rate = trip_frequency(FETCH_DATA);
+		avg_float = trip_rate_condense(avg_rate, &prefix);
+
+	  if (prefix)
+  		fprintf(stdout, "Final average rate: %.2f %cTrip/s\n", avg_float, prefix);
+  	else
+   		fprintf(stdout, "Final average rate: %u Trip/s\n", avg_rate);
 	}
 	omp_destroy_lock(&io_lock);
   free(qrand_seeds);
