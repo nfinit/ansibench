@@ -16,7 +16,7 @@ BINDIR = ./bin
 OUT    = $(BINDIR)/stream
 INPUT  = ./src/stream.c
 # ----------------------------------------------------------------------------
-CARGS  += -o$(OUT) $(OPTLEVEL) $(CFLAGS) $(XCFLAGS) $(INPUT)
+CARGS  += -o$(OUT) $(OPTLEVEL) $(XCFLAGS) $(INPUT) $(CFLAGS)
 # ----------------------------------------------------------------------------
 all: bin 
 run: all
