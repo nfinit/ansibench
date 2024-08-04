@@ -15,7 +15,7 @@ BINDIR = ./bin
 OUT    = $(BINDIR)/whetstone
 INPUT  = ./src/whetstone.c
 # ----------------------------------------------------------------------------
-CARGS  += -o$(OUT) $(OPTLEVEL) $(CFLAGS) $(XCFLAGS) $(INPUT)
+CARGS  += -o$(OUT) $(OPTLEVEL) $(XCFLAGS) $(INPUT) $(CFLAGS)
 # ----------------------------------------------------------------------------
 all: bin 
 run: all

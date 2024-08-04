@@ -17,7 +17,7 @@ BINDIR = ./bin
 OUT    = $(BINDIR)/dhrystone
 INPUT  = ./src/dhry_1.c ./src/dhry_2.c
 # ----------------------------------------------------------------------------
-CARGS  += $(OPTLEVEL) $(CFLAGS) $(XCFLAGS) $(INPUT)
+CARGS  += $(OPTLEVEL) $(XCFLAGS) $(INPUT) $(CFLAGS)
 # ----------------------------------------------------------------------------
 LOGDIR = ./log
 RUNLOG = "$(LOGDIR)/run-$(cc).txt"
