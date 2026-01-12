@@ -1,0 +1,7 @@
+# macOS artifacts
+._*
+
+# Agent contexts and steering
+AGENTS/
+.kiro/
+.claude/
