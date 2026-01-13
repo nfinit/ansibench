@@ -1,0 +1,4 @@
+Based on LINPACK benchmark from Netlib (public domain).
+Original C translation by Bonnie Toy (1988), modified by Will Menninger (1993).
+
+Modifications by ict@nfinit.systems (2018, 2022) are also released to the public domain.

@@ -24,7 +24,7 @@ INPUT  = ./src/core_main.c ./src/core_matrix.c ./src/core_list_join.c
 INPUT += ./src/core_state.c ./src/core_util.c ./src/core_portme.c
 # ----------------------------------------------------------------------------
 CARGS  += -DCOMPILER_FLAGS="\"$(OPTLEVEL)\"" -DMEM_LOCATION=$(memory)
-CARGS  += -o$(OUT) $(OPTLEVEL) $(CFLAGS) $(XCFLAGS) $(INPUT)
+CARGS  += -o$(OUT) $(OPTLEVEL) $(INPUT) $(CFLAGS) $(XCFLAGS)
 # ----------------------------------------------------------------------------
 all: bin 
 run: all

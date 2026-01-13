@@ -1,0 +1,4 @@
+Based on Dhrystone 2.1 benchmark from Netlib (public domain).
+Original by Reinhold P. Weicker (1988).
+
+Modifications for ANSI C compliance by ict@nfinit.systems (2022) are also released to the public domain.
