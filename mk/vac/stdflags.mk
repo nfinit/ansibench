@@ -2,5 +2,5 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 CC        = cc
 OPTLEVEL  = -O2
-CFLAGS   += -I./include
+CFLAGS   += -I ./include
 CFLAGS   += -g 

@@ -27,17 +27,17 @@ dirs:
 	@mkdir -p $(BINDIR)
 	@mkdir -p $(DATADIR)
 char: dirs $(INPUT) 
-	$(CC) -DCHAR -DIINT $(CARGS) -o$(OUT)-char
+	$(CC) -DCHAR -DIINT $(CARGS) -o $(OUT)-char
 short: dirs $(INPUT) 
-	$(CC) -DSHORT -DIINT $(CARGS) -o$(OUT)-short
+	$(CC) -DSHORT -DIINT $(CARGS) -o $(OUT)-short
 int: dirs $(INPUT) 
-	$(CC) -DINT -DIINT $(CARGS) -o$(OUT)-int
+	$(CC) -DINT -DIINT $(CARGS) -o $(OUT)-int
 float: dirs $(INPUT) 
-	$(CC) -DFLOAT -DIINT $(CARGS) -o$(OUT)-float
+	$(CC) -DFLOAT -DIINT $(CARGS) -o $(OUT)-float
 double: dirs $(INPUT) 
-	$(CC) -DDOUBLE -DILONG $(CARGS) -o$(OUT)-double
+	$(CC) -DDOUBLE -DILONG $(CARGS) -o $(OUT)-double
 ldouble: dirs $(INPUT) 
-	$(CC) -DLDOUBLE -DILONG $(CARGS) -o$(OUT)-ldouble
+	$(CC) -DLDOUBLE -DILONG $(CARGS) -o $(OUT)-ldouble
 clean:
 	@-rm -f $(OUT) core a.out *.o
 	@-rm -f $(BINDIR)/*

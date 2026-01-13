@@ -36,9 +36,9 @@ dirs:
 	@mkdir -p $(LOGDIR)
 bin: reg unreg
 reg: dirs
-	$(CC) $(CARGS) $(REGFLAG) -o$(OUT)-reg 
+	$(CC) $(CARGS) $(REGFLAG) -o $(OUT)-reg 
 unreg: dirs
-	$(CC) $(CARGS) -o$(OUT) 
+	$(CC) $(CARGS) -o $(OUT) 
 clean:
 	@-rm -f $(OUT) core a.out *.o
 	@-rm -f $(BINDIR)/*

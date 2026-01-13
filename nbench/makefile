@@ -15,7 +15,7 @@ OUT    = $(BINDIR)/nbench
 INPUT  = ./src/nbench0.c ./src/nbench1.c
 INPUT += ./src/hardware.c ./src/emfloat.c ./src/sysspec.c ./src/misc.c
 # ----------------------------------------------------------------------------
-CARGS  += -o$(OUT) $(OPTLEVEL) $(INPUT) $(CFLAGS) $(XCFLAGS)
+CARGS  += -o $(OUT) $(OPTLEVEL) $(INPUT) $(CFLAGS) $(XCFLAGS)
 # ----------------------------------------------------------------------------
 all: bin 
 run: all
