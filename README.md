@@ -98,13 +98,14 @@ utmost accuracy are not as necessary, while double-precision values
 are more frequently used in scientific and technical applications where
 minimal approximation is preferable. Many LINPACK variants default to
 double-precision (including the one in this package) because of the
-benchmark's significance in high-performance computing.
+benchmark's significance in high-performance scientific computing.
 
-This version of LINPACK is a C translation of the original FORTRAN version
-first written in 1988 by Bonnie Toy and later updated in 1993 by Will 
-Menninger, it most notably allows for user-definable matrix sizes and
-averages rolled and unrolled performance in its report. The original
-source can be found [here](http://www.netlib.org/benchmark/linpackc.new).
+This version of LINPACK is a C translation of Jack Dongarra's original 
+FORTRAN version first written in 1988 by Bonnie Toy and later updated 
+in 1993 by Will Menninger, it most notably allows for user-definable 
+matrix sizes and averages rolled and unrolled performance in its report. 
+The original source can be found 
+[here](http://www.netlib.org/benchmark/linpackc.new).
 
 This source has been slightly modified in this package to make it easier
 to automate and execute from scripts. It can now take the matrix size as
@@ -113,18 +114,24 @@ an argument and the output has changed slightly for a cleaner look.
 ##### Run notes
 
 LINPACK has a single parameter `n` which can be passed to it when running 
-with `make run`, this corresponds to the matrix size. Typical matrices 
-used with LINPACK are of order 100x100 or 1000x1000, though any value of 
-`n` can be passed in, within reason. LINPACK can also be run without the
-makefile by simply running the executable, which will then ask for `n` if
-it wasn't supplied as the first argument.
+with `make run`, which sets the array size. Like Dongarra's
+original LINPACK, which solved a matrix of 100x100 within a 201x200 array,
+this version also solves a system of half the order of the `n` given,
+reflecting the FORTRAN 77 convention of declaring arrays at a fixed
+maximum size as the language lacked dynamic allocation. Typical matrices
+used with LINPACK are of order 100x100 (`n` = `200`) or 1000x1000 (`n` =
+`2000`), though any value of `n` can greater than 10 be used. 
+LINPACK can also be run without the makefile by simply running the 
+executable, which will then ask for `n` if it wasn't supplied as the first argument.
 
 The single LINPACK source file is used to build two executables, `linpacksp` 
 for evaluating single-precision performance and `linpackdp` for evaluating 
 double-precision performance. Both are identical in functionality.
 
 Running LINPACK with `make run` will run both the single-precision and 
-double-precision versions of the benchmark.
+double-precision versions of the benchmark. **Note:** `make run` without
+a provided `n` will use `100` for its starting value, meaning a 50x50 system
+will be solved.
 
 ##### Building and running LINPACK in non-Unix environments
 
