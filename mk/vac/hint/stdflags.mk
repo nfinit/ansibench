@@ -1,0 +1,7 @@
+# Standard flags for HINT with VisualAge C
+# - Define RUNTM variable
+# - Include math library 
+# - Supress warnings regarding type limits that are triggered with char data
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+CFLAGS += -DRUNTM=$(runtime)
+CFLAGS += -lm

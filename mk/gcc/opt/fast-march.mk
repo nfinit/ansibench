@@ -1,2 +1,2 @@
--include ./ofast.mk
+-include ../mk/gcc/opt/fast.mk
 OPTLEVEL += -march=native
