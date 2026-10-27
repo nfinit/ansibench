@@ -24,6 +24,16 @@
 ** - Main function return type changed to integer for automation purposes
 ** - Re-organized output for cleaner reports
 **
+** Further modifications by ict@nfinit.systems, 10/26:
+**
+** - Driver now directly takes matrix order 'n' instead of array size
+**   - Array dimensions automatically computed (2n x 2n)
+**   - Header now reports array size and matrix order independently
+**   - Driver states minimum order if provided argument is too small
+** - Minor bug fixes:
+**   - Input buffer initialization to fix accidental garbage reads in arg loop
+**   - Driver fgets() return check to prevent looping in scripted runs
+**
 ** To compile:  cc -O -o linpack linpack.c -lm
 **
 */
@@ -83,31 +93,32 @@ int main(int argc, char **argv)
 
     {
     char    buf[80];
-    int     arsize;
+    int     n,arsize;
     long    arsize2d,nreps;
     size_t  malloc_arg;
     MEM_T   memreq;
 
+    buf[0]='\0';
     while (1)
         {
 	if (argc < 2)
        	    {
-	    printf("Enter array size (q to quit) [100]:  ");
-            fgets(buf,79,stdin);
+	    printf("Enter matrix order (q to quit) [100]:  ");
+            if (fgets(buf,79,stdin)==NULL)
+		break;
             }
 	if (buf[0]=='q' || buf[0]=='Q')
             break;
         if (buf[0]=='\0' || buf[0]=='\n')
-	    arsize=100;
+	    n=100;
 	else
-            arsize=atoi(buf);
+            n=atoi(buf);
         if (argc > 1)
-	    arsize=atoi(argv[1]);
-        arsize/=2;
-        arsize*=2;
-        if (arsize<10)
+	    n=atoi(argv[1]);
+	arsize=n*2;
+        if (n<5)
             {
-            printf("Too small.\n");
+            printf("Too small. (minimum order 5)\n");
 	    if (argc > 1) break;
             continue;
             }
@@ -122,6 +133,7 @@ int main(int argc, char **argv)
             }
         printf("LINPACK benchmark, %s precision.\n",PREC);
         printf("Machine precision:  %d digits.\n",BASE10DIG);
+	printf("Matrix order %d X %d.\n",n,n);
         printf("Array size %d X %d.\n",arsize,arsize);
         printf("Memory required:  %ldK.\n",(memreq+512L)>>10);
         printf("Average rolled and unrolled performance:\n\n");
