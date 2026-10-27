@@ -1,3 +1,10 @@
+/* Define _XOPEN_SOURCE to support POSIX popen() and pclose() properly 
+** avoids segfaults on 64-bit systems where the heap is above 4 GB
+*/
+#if !defined(_XOPEN_SOURCE) && !defined(_POSIX_C_SOURCE)
+#define _XOPEN_SOURCE 500
+#endif
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -42,7 +49,7 @@ static void removeNewLine(char * s) {
 static void runCommand (const char *command, char *result) {
   FILE * pipe;
 
-  pipe = (FILE*)popen(command, "r");
+  pipe = popen(command, "r");
   if(pipe == NULL) {
     /* command failed */
     result[0] = '\0';
